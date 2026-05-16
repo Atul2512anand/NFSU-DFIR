@@ -1,0 +1,27 @@
+# Python environment
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env/
+
+# IDEs
+.vscode/
+.idea/
+
+# Project specific
+output/
+evidence/
+*.log
+.pytest_cache/
+*.db
+*.crypt15
+*.sqlite
+report.html
+report.json
+# Ensure required directories are not ignored
+!sample_data/
+!tests/
+!templates/
