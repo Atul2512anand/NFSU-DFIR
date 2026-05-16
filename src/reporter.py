@@ -1,3 +1,7 @@
+"""
+Module for forensic acquisition.
+"""
+
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -58,6 +62,8 @@ class ForensicReporter:
                         evidence[flag_key] = True
 
             def format_date(dt_val: Any) -> str:
+                """Function documentation."""
+
                 s = str(dt_val).strip()
                 if not s or s == "None":
                     return "1970-01-01T00:00:00Z"

@@ -1,3 +1,7 @@
+"""
+Module for forensic acquisition.
+"""
+
 import sqlite3
 from pathlib import Path
 from typing import Any, Dict, List
@@ -14,6 +18,8 @@ class SQLiteForensicParser:
     """
 
     def __init__(self, db_path: Path):
+        """Function documentation."""
+
         self.db_path = db_path
 
     def _query_db(self, query: str) -> List[Dict[str, Any]]:

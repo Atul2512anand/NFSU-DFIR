@@ -1,3 +1,7 @@
+"""
+Module for forensic acquisition.
+"""
+
 import argparse
 import sys
 import json
@@ -98,6 +102,8 @@ def main() -> None:
     timeline = []
 
     def add_event(msg: str):
+        """Function documentation."""
+
         # Use millisecond-accurate UTC format matching the ForensicLogger (ISO
         # 8601 + 'Z')
         now = datetime.now(timezone.utc)
@@ -109,7 +115,7 @@ def main() -> None:
 
     start_time = datetime.now(timezone.utc)
     add_event(f"Acquisition started for Case: {args.case}")
-    add_event(f"Tool Startup: Antigravity Forensic Acquisition Tool v1.0")
+    add_event("Tool Startup: Antigravity Forensic Acquisition Tool v1.0")
     add_event(f"CLI Arguments: case={args.case}, investigator={args.investigator}, serial={args.serial}, dry_run={args.dry_run}")
     add_event(f"Device Connection: Model={metadata.get('model')}, Serial={metadata.get('serial_number')}, Android Version={metadata.get('android_version')}")
     add_event(f"Investigator confirmation: Investigator {args.investigator} authorized acquisition.")
@@ -198,7 +204,7 @@ def main() -> None:
     # Prepare integrity data for report
     report_integrity = [{"filename": k, "hash": v}
                         for k, v in integrity_manifest.items()]
-                        
+
     total_evidence_size = 0
     total_file_count = 0
     for rel_path, expected_hash in integrity_manifest.items():
@@ -268,11 +274,11 @@ def main() -> None:
 
     add_event(f"Acquisition Completion: Total duration: {duration_str}, Total files: {total_file_count}, Total evidence size: {total_evidence_size} bytes")
     add_event("Acquisition process completed successfully.")
-    
+
     # F. acquisition.log integrity
     log_hash_initial = hasher.hash_file(paths.log_file)
     add_event(f"acquisition.log SHA256 computed: {log_hash_initial}")
-    
+
     log_hash_final = hasher.hash_file(paths.log_file)
     with open(paths.integrity / "acquisition_hash.txt", "w") as f:
         f.write(f"SHA-256 of acquisition.log: {log_hash_final}\n")

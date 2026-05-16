@@ -1,3 +1,7 @@
+"""
+Module for forensic acquisition.
+"""
+
 import datetime
 from dataclasses import dataclass
 from pathlib import Path

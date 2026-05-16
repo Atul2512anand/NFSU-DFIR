@@ -1,3 +1,7 @@
+"""
+Module for forensic acquisition.
+"""
+
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import Dict, Optional, Any, List
@@ -17,6 +21,8 @@ class AndroidDevice:
     """
 
     def __init__(self, adb_device: AdbDeviceTcp, serial: str):
+        """Function documentation."""
+
         self.adb = adb_device
         self.serial = serial
         self.metadata: Dict[str, str] = {}
@@ -92,6 +98,8 @@ class AndroidDeviceManager:
     """
 
     def __init__(self):
+        """Function documentation."""
+
         self.current_device: Optional[AndroidDevice] = None
 
     def _get_adb_keys(self) -> List[PythonRSASigner]:

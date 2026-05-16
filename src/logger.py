@@ -1,3 +1,7 @@
+"""
+Module for forensic acquisition.
+"""
+
 import logging
 import sys
 import threading
