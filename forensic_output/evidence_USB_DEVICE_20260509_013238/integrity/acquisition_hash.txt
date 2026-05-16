@@ -1,0 +1,1 @@
+SHA-256 of acquisition.log: f5c85b1634f75f4a15fcae57936c286a8d38cd2ae77361db108a090bc36fdccf

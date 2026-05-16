@@ -1,0 +1,2232 @@
+[
+    {
+        "package_name": "com.android.updater",
+        "version": "9.1.7",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.powerkeeper",
+        "version": "4.2.00",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.miservice",
+        "version": "17.0.0.0.gb",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.overlay.modules.permissioncontroller.forframework",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.miwallpaper.overlay.customize",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mi.android.globalFileexplorer",
+        "version": "V1-250221",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "android.miui.overlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.msa.global",
+        "version": "2026.03.25.00-release",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.novatek.novavis",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:50"
+    },
+    {
+        "package_name": "com.mckinsey.mckinseyaccelerate",
+        "version": "7.4.2",
+        "install_date": "2026-05-05 18:09:15"
+    },
+    {
+        "package_name": "android.miui.home.launcher.res",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.indus.appstore",
+        "version": "1.26.04.07.0_XIAOMI",
+        "install_date": "2026-04-04 18:23:40"
+    },
+    {
+        "package_name": "cn.wps.moffice_eng",
+        "version": "18.25.1",
+        "install_date": "2026-04-01 14:51:22"
+    },
+    {
+        "package_name": "com.android.systemui.accessibility.accessibilitymenu",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.dreams.phototable",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:49"
+    },
+    {
+        "package_name": "com.android.overlay.gmscontactprovider",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.providers.contacts",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.nbu.files",
+        "version": "1.10898.894832547.0-release",
+        "install_date": "2026-04-01 15:39:27"
+    },
+    {
+        "package_name": "com.trustonic.telecoms.setup",
+        "version": "1.5.3-20251023153806",
+        "install_date": "2025-02-26 20:06:28"
+    },
+    {
+        "package_name": "com.longcheertel.sarauth",
+        "version": "1.0.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.companiondevicemanager",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.cts.priv.ctsshim",
+        "version": "15",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.android.providers.downloads",
+        "version": "25.02.07.108",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.bluetoothmidiservice",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.facebook.appmanager",
+        "version": "131.0.28",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.credentialmanager",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.xmsf",
+        "version": "6.2.50-G",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "android.miui.overlay.telephony",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.printservice.recommendation",
+        "version": "1.3.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.autoui.ext",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:50"
+    },
+    {
+        "package_name": "com.google.android.captiveportallogin",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.networkstack",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "in.amazon.mShop.android.shopping",
+        "version": "32.8.2.300",
+        "install_date": "2026-04-01 14:52:29"
+    },
+    {
+        "package_name": "com.miui.phone.carriers.overlay.vodafone",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.keychain",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.longcheertel.cit",
+        "version": "1.4.4",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.accessibility.switchaccess",
+        "version": "1.16.1.798952610",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.overlay.gmsconfig.asi",
+        "version": "1.0",
+        "install_date": "2025-02-26 20:06:27"
+    },
+    {
+        "package_name": "com.miui.global.packageinstaller",
+        "version": "3.8.4",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.overlay.circletosearch",
+        "version": "1.0",
+        "install_date": "2026-04-01 16:24:04"
+    },
+    {
+        "package_name": "com.mediatek.networkstack.tethering.googleoverlay",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:47"
+    },
+    {
+        "package_name": "com.android.shell",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.micloudsync",
+        "version": "1.12.0.1.40",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.cambyte.okenscan",
+        "version": "5.0.0.20250828",
+        "install_date": "2026-04-01 15:37:29"
+    },
+    {
+        "package_name": "com.mediatek.atci.service",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.ondevicepersonalization.services",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.wdstechnology.android.kryten",
+        "version": "1.0.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.overlay.modules.healthfitness.forframework",
+        "version": "1.0",
+        "install_date": "2026-04-01 16:24:04"
+    },
+    {
+        "package_name": "com.phonepe.app",
+        "version": "26.04.10.0",
+        "install_date": "2026-04-01 15:36:12"
+    },
+    {
+        "package_name": "com.android.bookmarkprovider",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.rom",
+        "version": "1.11.0.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.DeviceAsWebcam",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:04"
+    },
+    {
+        "package_name": "com.miui.core.internal.services",
+        "version": "2.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.sharedstoragebackup",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.imsserviceentitlement",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:05"
+    },
+    {
+        "package_name": "com.android.providers.media",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.networkstack.tethering.overlay",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:47"
+    },
+    {
+        "package_name": "com.android.providers.calendar",
+        "version": "16.0.0.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.incallui",
+        "version": "5.0.1.164",
+        "install_date": "2025-02-26 20:06:31"
+    },
+    {
+        "package_name": "com.android.providers.blockednumber",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.documentsui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.joyose",
+        "version": "2.4.77",
+        "install_date": "2025-02-26 20:06:29"
+    },
+    {
+        "package_name": "com.android.statementservice",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.lbs.em2.ui",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.safetycore",
+        "version": "1.0.895829843",
+        "install_date": "2026-04-01 15:38:26"
+    },
+    {
+        "package_name": "com.miui.audiomonitor",
+        "version": "16.3.2",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.proxyhandler",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.overlay.modules.permissioncontroller",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.emergency",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.gms.location.history",
+        "version": "1.2",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.aod",
+        "version": "DEV-2321.0.0.1-01051756",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mi.healthglobal",
+        "version": "1.0.24.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.gm",
+        "version": "2026.04.06.899171334.Release",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.voicecommand",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.duraspeed",
+        "version": "3.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.backupconfirm",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.tachyon",
+        "version": "354.0.900835264.duo.android_20260406.00_p3",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.server.telecom.overlay.miui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.goodix.fingerprint.setting",
+        "version": "1.0.510.2409291046",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.mtp",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.hypercomm",
+        "version": "15.0.0",
+        "install_date": "2026-04-20 14:38:49"
+    },
+    {
+        "package_name": "com.miui.screenrecorder",
+        "version": "4.15.2.7.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.theme.font.notoserifsource",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.spotify.music",
+        "version": "9.1.42.2058",
+        "install_date": "2026-04-07 19:54:51"
+    },
+    {
+        "package_name": "com.miui.guardprovider",
+        "version": "2.5.5-20251030.1",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.cloudbackup",
+        "version": "1.12.1.6.42.6",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.wallpapercropper",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.glgm",
+        "version": "3.9.5",
+        "install_date": "2025-02-26 20:06:34"
+    },
+    {
+        "package_name": "com.google.android.overlay.gmsconfig.geotz",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.internal.systemui.navbar.gestural",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.soundrecorder",
+        "version": "7.8.8.2",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.systemui.overlay.devices.android",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.settings.intelligence",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.devicediagnostics",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:04"
+    },
+    {
+        "package_name": "com.lbe.security.miui",
+        "version": "1.9.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.midrop",
+        "version": "3.47.11",
+        "install_date": "2025-02-26 20:06:35"
+    },
+    {
+        "package_name": "com.google.android.overlay.gmsconfig.personalsafety",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.block.puzzle.game.hippo.mi",
+        "version": "2.5.0",
+        "install_date": "2026-04-01 14:51:31"
+    },
+    {
+        "package_name": "com.android.overlay.gmssettings",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.federatedcompute",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.google.android.webview",
+        "version": "147.0.7727.111",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.sdksandbox",
+        "version": "T-initial",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.miui.securityadd",
+        "version": "9.12.03-250829.1.1",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.cellbroadcastservice",
+        "version": "R-initial",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.android.thememanager.customizethemeconfig.config.overlay",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.internal.systemui.navbar.threebutton",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.egg",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.telephony",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.touchservice",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:06"
+    },
+    {
+        "package_name": "com.google.android.overlay.modules.modulemetadata.forframework",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.gallery",
+        "version": "4.3.1.9-global",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.mdmconfig",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "org.cris.aikyam",
+        "version": "2.1.52",
+        "install_date": "2026-04-01 15:36:34"
+    },
+    {
+        "package_name": "com.makemytrip",
+        "version": "11.4.2",
+        "install_date": "2026-04-10 12:34:58"
+    },
+    {
+        "package_name": "com.google.android.packageinstaller",
+        "version": "16-13928101",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.se",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.snapchat.android",
+        "version": "13.89.0.47",
+        "install_date": "2026-04-01 14:51:55"
+    },
+    {
+        "package_name": "com.google.android.apps.youtube.music",
+        "version": "9.16.51",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.ubercab",
+        "version": "4.627.10003",
+        "install_date": "2026-04-02 15:25:13"
+    },
+    {
+        "package_name": "com.android.stk",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.overlay.systemui",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.calculator",
+        "version": "16.1.5",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.bips",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.partnersetup",
+        "version": "100.874117303",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.bluetooth",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.phone.overlay",
+        "version": "1.0.3",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.projection.gearhead",
+        "version": "16.5.661214-release",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.overlay.gmstelephony",
+        "version": "1.0",
+        "install_date": "2025-02-26 20:06:28"
+    },
+    {
+        "package_name": "com.xiaomi.finddevice",
+        "version": "20.0.4",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.feedback",
+        "version": "16-13928101",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.notification",
+        "version": "2.1.0.35.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.music",
+        "version": "8.29.9113-1.W",
+        "install_date": "2026-04-01 15:37:38"
+    },
+    {
+        "package_name": "android.autoinstalls.config.Xiaomi.model",
+        "version": "1001",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.nbu.paisa.user",
+        "version": "328.1.2 (arm64-v8a_release_flutter)",
+        "install_date": "2026-04-01 15:30:41"
+    },
+    {
+        "package_name": "com.preff.kb.xm",
+        "version": "4.4.5",
+        "install_date": "2025-02-26 19:21:51"
+    },
+    {
+        "package_name": "com.google.android.inputmethod.latin",
+        "version": "17.1.10.887912998-release-arm64-v8a",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "miui.systemui.plugin",
+        "version": "17.0.3.43.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.bugreport",
+        "version": "17.0.7.10",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.yellowpage",
+        "version": "23.0.260309",
+        "install_date": "2025-02-26 20:06:30"
+    },
+    {
+        "package_name": "cn.wps.xiaomi.abroad.lite",
+        "version": "2.6.6",
+        "install_date": "2025-02-26 20:06:28"
+    },
+    {
+        "package_name": "com.mediatek.wifi.system.mainline.resources.overlay",
+        "version": "1.0",
+        "install_date": "2026-04-20 14:38:47"
+    },
+    {
+        "package_name": "com.google.android.uwb.resources",
+        "version": "T-initial",
+        "install_date": "2026-04-20 14:38:50"
+    },
+    {
+        "package_name": "com.android.providers.downloads.ui",
+        "version": "25.10.21.102",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.ons",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.healthconnect.controller",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.mi.globallayout",
+        "version": "3.1.0.63",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.contactkeys",
+        "version": "1.355.899514882",
+        "install_date": "2026-04-01 15:38:30"
+    },
+    {
+        "package_name": "com.xiaomi.ugd",
+        "version": "1.2.2",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.mediaeditor",
+        "version": "2.3.0.8.3-global",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.setupwizard",
+        "version": "236.808841380",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.system",
+        "version": "1.15.0.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.wifi.resources",
+        "version": "R-initial",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.miui.securitycenter",
+        "version": "12.3.0-260211.1.1",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.simappdialog",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.wallpaper.livepicker",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.miwallpaper.config.overlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.internal.display.cutout.emulation.waterfall",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.wallpaper.overlay.berylin",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.qr",
+        "version": "2025_11_04_10_42",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.cameramind",
+        "version": "1.0.0",
+        "install_date": "2026-04-01 16:24:06"
+    },
+    {
+        "package_name": "com.google.android.overlay.modules.ext.services",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.instagram.android",
+        "version": "427.0.0.47.73",
+        "install_date": "2026-04-05 21:47:12"
+    },
+    {
+        "package_name": "com.android.systemui.gesture.line.overlay",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.Version1",
+        "version": "4.27",
+        "install_date": "2026-04-01 15:34:55"
+    },
+    {
+        "package_name": "com.hubballi",
+        "version": "3.2",
+        "install_date": "2026-04-25 13:02:38"
+    },
+    {
+        "package_name": "com.android.traceur",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.messaging",
+        "version": "messages.android_20260410_02_RC04.phone_dynamic",
+        "install_date": "2025-02-26 20:06:30"
+    },
+    {
+        "package_name": "com.azure.authenticator",
+        "version": "6.2604.2550",
+        "install_date": "2026-04-01 15:30:48"
+    },
+    {
+        "package_name": "com.mediatek.networkstack.nongooverlay",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:47"
+    },
+    {
+        "package_name": "com.android.location.fused",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.cellbroadcastreceiver",
+        "version": "R-initial",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.googlequicksearchbox",
+        "version": "17.16.22.ve.arm64",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.goibibo",
+        "version": "20.2.1",
+        "install_date": "2026-05-04 19:23:25"
+    },
+    {
+        "package_name": "com.google.android.modulemetadata",
+        "version": "2026-03-01S+",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.irctc.tourism_new",
+        "version": "3.59",
+        "install_date": "2026-04-04 08:51:25"
+    },
+    {
+        "package_name": "com.miui.home",
+        "version": "RELEASE-6.01.05.2007-02271713",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.ext.services",
+        "version": "aml_361153320",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.teacheron.teacheron_production",
+        "version": "2.0.11",
+        "install_date": "2026-04-21 19:07:14"
+    },
+    {
+        "package_name": "com.google.android.configupdater",
+        "version": "16-13928101",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "org.ifaa.aidl.manager",
+        "version": "1.0.250812",
+        "install_date": "2025-02-26 20:06:29"
+    },
+    {
+        "package_name": "com.android.mms",
+        "version": "17.0.1.20-gl",
+        "install_date": "2025-02-26 20:06:33"
+    },
+    {
+        "package_name": "com.mintgames.wordtrip",
+        "version": "1.0.7.0",
+        "install_date": "1999-12-31 21:30:00"
+    },
+    {
+        "package_name": "com.google.android.gms.supervision",
+        "version": "1.0.800961816.phone",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.virtualization.terminal",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:50"
+    },
+    {
+        "package_name": "com.google.android.server.deviceconfig.resources",
+        "version": "V",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.google.android.apps.photos",
+        "version": "7.73.0.902316009",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.aiasst.vision",
+        "version": "0.0.1",
+        "install_date": "2026-04-01 16:24:05"
+    },
+    {
+        "package_name": "com.facebook.stella",
+        "version": "268.1.0.52.166",
+        "install_date": "2026-04-09 20:00:37"
+    },
+    {
+        "package_name": "in.goindigo.android",
+        "version": "7.3.6",
+        "install_date": "2026-05-03 15:15:40"
+    },
+    {
+        "package_name": "com.mediatek.location.lppe.main",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.internal.display.cutout.emulation.corner",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.gms",
+        "version": "26.16.31 (260400-900800821)",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mintgames.triplecrush.tile.fun",
+        "version": "2.2.1",
+        "install_date": "2026-04-01 14:51:45"
+    },
+    {
+        "package_name": "com.mediatek.wifi.system.resources.overlay",
+        "version": "1.0",
+        "install_date": "2026-04-20 14:38:47"
+    },
+    {
+        "package_name": "com.xiaomi.mtb",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mi.appfinder",
+        "version": "1.15.0",
+        "install_date": "2026-04-01 16:24:05"
+    },
+    {
+        "package_name": "com.android.systemui.overlay.miui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.digital.bsnl.selfcare",
+        "version": "3.5",
+        "install_date": "2026-04-19 18:14:03"
+    },
+    {
+        "package_name": "com.mediatek.wifi.mainline.resources.overlay",
+        "version": "1.0",
+        "install_date": "2026-04-20 14:38:47"
+    },
+    {
+        "package_name": "com.milink.service",
+        "version": "17.1.2.0.liteV1.2512152212-global",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.thememanager",
+        "version": "3.0.5.6-global",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.inputsettings.overlay.miui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.printspooler",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.MtkTelephonyServiceResOverlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.systemui.devices.overlay",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.misound",
+        "version": "15-3.2-3-20251117",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.setupwizard.searchselector",
+        "version": "1.36.839559840",
+        "install_date": "2025-02-26 20:06:28"
+    },
+    {
+        "package_name": "com.facebook.system",
+        "version": "131.0.28",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.soundpicker",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mi.global.shop",
+        "version": "4.34.2",
+        "install_date": "2025-02-26 20:06:30"
+    },
+    {
+        "package_name": "com.google.mainline.telemetry",
+        "version": "2026-02-01S+",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.wallpaper.overlay.customize",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.microdroid.empty_payload",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.tencent.soter.soterserver",
+        "version": "2.0.250811",
+        "install_date": "2025-02-26 20:06:29"
+    },
+    {
+        "package_name": "cris.org.in.prs.ima",
+        "version": "4.2.56",
+        "install_date": "2026-04-01 15:34:47"
+    },
+    {
+        "package_name": "com.google.android.cellbroadcastservice.overlay.miui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.externalstorage",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.server.telecom",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.camera",
+        "version": "6.2.000960.2",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.daemon",
+        "version": "2.1",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.providers.media.module",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.mediatek.MtkSettingsResOverlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.calllogbackup",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.linkedin.android",
+        "version": "4.1.1196",
+        "install_date": "2026-04-01 14:51:36"
+    },
+    {
+        "package_name": "com.miui.securitycore",
+        "version": "3.2.2-3-251209",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.rapido.passenger",
+        "version": "8.105.1",
+        "install_date": "2026-04-02 15:29:23"
+    },
+    {
+        "package_name": "com.miui.fm",
+        "version": "2.14.01.031109i",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.trustservice",
+        "version": "1.2.250903",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.jewelsblast.ivygames.Adventure.free",
+        "version": "1.4.4",
+        "install_date": "2026-04-01 14:51:34"
+    },
+    {
+        "package_name": "com.android.dreams.basic",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.sukhavati.pvp.carrom",
+        "version": "10.32.0",
+        "install_date": "2026-04-01 14:52:25"
+    },
+    {
+        "package_name": "com.android.mms.service",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.cellbroadcastreceiver",
+        "version": "R-initial",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.miui.mediaviewer",
+        "version": "v2103251202(MediaViewer-Global-ROM)",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.photopicker",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.google.android.play.games",
+        "version": "2025.09.62452 (827342201.827342201-190400)",
+        "install_date": "2026-04-01 15:34:26"
+    },
+    {
+        "package_name": "com.xiaomi.bluetooth.rro.device.config.overlay",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.phone",
+        "version": "15.0.2",
+        "install_date": "2026-04-01 16:24:06"
+    },
+    {
+        "package_name": "com.mediatek.smartratswitch.service",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.ygps",
+        "version": "1.1",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.micloud.sdk",
+        "version": "2.0.0.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.matteljv.uno",
+        "version": "1.17.1803",
+        "install_date": "2026-05-02 16:10:32"
+    },
+    {
+        "package_name": "com.google.android.apps.wellbeing",
+        "version": "1.39.902988200 (814547)",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.virtualmachine.res",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.google.android.adservices.api",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.android.wifi.resources.xiaomi",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miuix.editor",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.scanner",
+        "version": "13.2204.21",
+        "install_date": "2025-02-26 20:06:32"
+    },
+    {
+        "package_name": "com.android.inputdevices",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.appsearch.apk",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.android.providers.telephony.overlay.miui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.weather2",
+        "version": "G-17.0.3.15",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.FrameworkResOverlayExt",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.onetimeinitializer",
+        "version": "16-13928101",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.callrecorder",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.irctc.fot",
+        "version": "2.25.2",
+        "install_date": "2026-04-04 09:15:48"
+    },
+    {
+        "package_name": "com.google.android.permissioncontroller",
+        "version": "aml_361524160",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.android.carrierconfig.overlay.miui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.apps.tag",
+        "version": "1.1",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.permissioncontroller.overlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.mipicks",
+        "version": "600-11.6.0.0-IAS",
+        "install_date": "2025-02-26 20:06:36"
+    },
+    {
+        "package_name": "com.mediatek.SettingsProviderResOverlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.analytics",
+        "version": "6.23.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.cloudprint",
+        "version": "1.47",
+        "install_date": "2026-04-01 15:38:20"
+    },
+    {
+        "package_name": "com.google.android.overlay.modules.documentsui",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.smarthome",
+        "version": "11.4.702",
+        "install_date": "2025-02-26 20:06:30"
+    },
+    {
+        "package_name": "com.google.android.devicelockcontroller",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.miui.android.fashiongallery",
+        "version": "4.5.7",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.settings.rro.device.hide.statusbar.overlay",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.account",
+        "version": "R-26.01.30.02",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.thirdappassistant",
+        "version": "5.6-global",
+        "install_date": "2026-04-01 16:24:06"
+    },
+    {
+        "package_name": "com.android.managedprovisioning",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.mishare.connectivity",
+        "version": "4.0.3.global",
+        "install_date": "2025-02-26 20:06:31"
+    },
+    {
+        "package_name": "com.mediatek.mdmlsample",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.microsoftsdk.crossdeviceservicebroker",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:06"
+    },
+    {
+        "package_name": "com.xiaomi.payment",
+        "version": "1.15.0-global",
+        "install_date": "2025-02-26 20:06:32"
+    },
+    {
+        "package_name": "com.miui.miwallpaper.overlay.berylin",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.mi_connect_service",
+        "version": "5.1.174.10",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.classroom",
+        "version": "3.56.899753932",
+        "install_date": "2026-04-01 15:36:19"
+    },
+    {
+        "package_name": "com.android.nfc",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.gsf",
+        "version": "16-13928101",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.systemui.navigation.bar.overlay",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.internal.display.cutout.emulation.double",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.frameworkresoverlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.networkstack.overlay.miui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.simactivate.service",
+        "version": "26.01.22-R",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.health.connect.backuprestore",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.google.android.syncadapters.calendar",
+        "version": "2025.10.0-735189449-release",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mi.globalminusscreen",
+        "version": "13.67.2",
+        "install_date": "2025-02-26 20:06:34"
+    },
+    {
+        "package_name": "com.google.ar.lens",
+        "version": "1.18.250731009",
+        "install_date": "2026-04-01 15:37:50"
+    },
+    {
+        "package_name": "com.grofers.customerapp",
+        "version": "17.91.0",
+        "install_date": "2026-04-30 14:53:02"
+    },
+    {
+        "package_name": "com.sbi.lotusintouch",
+        "version": "2.29.02",
+        "install_date": "2026-04-01 21:53:35"
+    },
+    {
+        "package_name": "com.android.managedprovisioning.overlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.systemui",
+        "version": "20250121.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.sukhavati.gotoplaying.bubble.BubbleShooter.mint",
+        "version": "1.5.36",
+        "install_date": "2026-04-01 14:52:08"
+    },
+    {
+        "package_name": "com.google.ar.core",
+        "version": "1.54.260890093",
+        "install_date": "2026-04-01 15:38:17"
+    },
+    {
+        "package_name": "com.microsoft.skydrive",
+        "version": "7.51.1",
+        "install_date": "2026-04-01 14:51:43"
+    },
+    {
+        "package_name": "us.zoom.videomeetings",
+        "version": "7.0.2.38719",
+        "install_date": "2026-05-05 17:11:41"
+    },
+    {
+        "package_name": "com.android.role.notes.enabled",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.netflix.mediaclient",
+        "version": "9.54.0 build 8 63892",
+        "install_date": "2026-04-01 14:51:51"
+    },
+    {
+        "package_name": "com.google.android.wifi.resources.xiaomi",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.mainline.adservices",
+        "version": "2025-11-01T+",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.aicr",
+        "version": "3.4.13",
+        "install_date": "2026-04-01 16:24:05"
+    },
+    {
+        "package_name": "com.android.settings.overlay.miui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.hotwordenrollment.okgoogle",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.player",
+        "version": "9.36.01.040210i",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.cleaner",
+        "version": "1030.1.260410.release",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.avatarpicker",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:04"
+    },
+    {
+        "package_name": "com.miui.phrase",
+        "version": "4.7.2",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.extraphoto",
+        "version": "2.1.0.1.0-global",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.olacabs.customer",
+        "version": "7.4.9",
+        "install_date": "2026-04-02 19:30:56"
+    },
+    {
+        "package_name": "com.android.deskclock",
+        "version": "17.33.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.wallpaperbackup",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:05"
+    },
+    {
+        "package_name": "com.miui.wallpaper.overlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.core",
+        "version": "1.20.2.5-7",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.settings.rro.device.type.overlay",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.localtransport",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "android",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.duokan.phone.remotecontroller",
+        "version": "7.1.5R",
+        "install_date": "2025-02-26 20:06:29"
+    },
+    {
+        "package_name": "com.miui.compass",
+        "version": "16.2.6.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.voiceunlock",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.cellbroadcastuiresoverlay",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.longcheertel.AutoTest",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.wejoy.weplay.ar",
+        "version": "6.1.6",
+        "install_date": "2026-05-03 15:15:30"
+    },
+    {
+        "package_name": "com.logame.eliminateintruder3d",
+        "version": "2.58",
+        "install_date": "2026-04-01 14:51:42"
+    },
+    {
+        "package_name": "com.whereismytrain.android",
+        "version": "7.1.5.802422502",
+        "install_date": "2026-04-01 15:34:38"
+    },
+    {
+        "package_name": "com.android.hotwordenrollment.xgoogle",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.pacprocessor",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.accessibility",
+        "version": "V0.7.3.GL",
+        "install_date": "2026-04-01 16:24:05"
+    },
+    {
+        "package_name": "com.matiks.app",
+        "version": "1.20.400",
+        "install_date": "2026-04-25 11:20:27"
+    },
+    {
+        "package_name": "net.one97.paytm",
+        "version": "10.78.0",
+        "install_date": "2026-04-03 10:02:43"
+    },
+    {
+        "package_name": "com.miui.phone.carriers.overlay.h3g",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.safetycenter.resources",
+        "version": "33 system image",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.google.android.overlay.gmsconfig.searchselector",
+        "version": "1.0",
+        "install_date": "2025-02-26 20:06:28"
+    },
+    {
+        "package_name": "com.android.internal.display.cutout.emulation.hole",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.settings",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.engineermode",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.miravision.ui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.internal.display.cutout.emulation.tall",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.networkstack.tethering",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.xiaomi.discover",
+        "version": "26.3.2.862",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.cameraextensions",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.networkstack.gooverlay",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:47"
+    },
+    {
+        "package_name": "com.bsp.logmanager",
+        "version": "15",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.notes",
+        "version": "2.3.5.7",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.dts.freefiremax",
+        "version": "2.124.1",
+        "install_date": "2026-04-18 23:46:08"
+    },
+    {
+        "package_name": "com.android.carrierconfig",
+        "version": "1.0.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.wifi.resources.overlay",
+        "version": "1.0",
+        "install_date": "2026-04-20 14:38:47"
+    },
+    {
+        "package_name": "com.confirmtkt.lite",
+        "version": "9.0.6",
+        "install_date": "2026-04-04 13:24:30"
+    },
+    {
+        "package_name": "com.openai.chatgpt",
+        "version": "1.2026.111",
+        "install_date": "2026-04-03 08:14:09"
+    },
+    {
+        "package_name": "com.google.android.videos",
+        "version": "4.39.4323.892787752.3-release",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.continuity.sdkapp",
+        "version": "5.0.136.10.0625201",
+        "install_date": "2026-04-20 14:38:48"
+    },
+    {
+        "package_name": "com.google.android.ext.shared",
+        "version": "1",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.bard",
+        "version": "1.0.882555348",
+        "install_date": "2026-04-02 22:14:38"
+    },
+    {
+        "package_name": "com.xiaomi.xmsfkeeper",
+        "version": "1.0.7",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.chrome",
+        "version": "147.0.7727.137",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.facebook.services",
+        "version": "161.0.37",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.maps",
+        "version": "26.17.06.901412876",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.compos.payload",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.google.android.apps.chromecast.app",
+        "version": "4.14.41.1",
+        "install_date": "2026-04-01 15:40:18"
+    },
+    {
+        "package_name": "com.debug.loggerui",
+        "version": "6.2.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.as",
+        "version": "B.23.playstore.oemminimal.906749939",
+        "install_date": "2025-02-26 20:06:29"
+    },
+    {
+        "package_name": "com.android.musicfx",
+        "version": "1.4",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.overlay.gmsconfig.message",
+        "version": "1.0",
+        "install_date": "2025-02-26 20:06:28"
+    },
+    {
+        "package_name": "com.android.internal.systemui.navbar.transparent",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "android.aosp.overlay.telephony",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.soulcompany.bubbleshooter.relaxing",
+        "version": "1.74",
+        "install_date": "2026-04-01 14:52:00"
+    },
+    {
+        "package_name": "com.google.android.marvin.talkback",
+        "version": "16.2.0.855052621",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.whatsapp",
+        "version": "2.26.15.76",
+        "install_date": "2026-04-02 07:29:18"
+    },
+    {
+        "package_name": "com.miui.fmservice",
+        "version": "23.2.7",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.miwallpaper",
+        "version": "5.4.0-ALPHA-12292047",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.intentresolver",
+        "version": "2021-11",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.docs",
+        "version": "2.26.157.5.all.alldpi",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.misightservice",
+        "version": "0.9.5",
+        "install_date": "2026-04-01 16:24:06"
+    },
+    {
+        "package_name": "com.miui.vsimcore",
+        "version": "1.1.0",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.microsoft.appmanager",
+        "version": "1.26041.171.0",
+        "install_date": "2026-04-08 10:24:05"
+    },
+    {
+        "package_name": "com.android.certinstaller",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.safetyhub",
+        "version": "2026.04.02.893398670.0-release_gms",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.datachannel.service",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:06"
+    },
+    {
+        "package_name": "com.android.wifi.dialog",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.restore",
+        "version": "1.0.902528171",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.systemui.carriers.overlay",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.calendar",
+        "version": "G-17.0.12",
+        "install_date": "2025-02-26 20:06:33"
+    },
+    {
+        "package_name": "com.mediatek.networkstack.overlay",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:47"
+    },
+    {
+        "package_name": "com.miui.backup",
+        "version": "7.0.0.9-OS3",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.providers.telephony",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "in.swiggy.android",
+        "version": "4.107.2",
+        "install_date": "2026-04-03 19:47:58"
+    },
+    {
+        "package_name": "com.miui.settings.rro.device.config.overlay",
+        "version": "1.0",
+        "install_date": "2026-04-20 14:38:47"
+    },
+    {
+        "package_name": "com.myairtelapp",
+        "version": "4.141.1",
+        "install_date": "2026-04-19 18:13:55"
+    },
+    {
+        "package_name": "com.xiaomi.barrage",
+        "version": "1.1.12",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.aon",
+        "version": "5.0.89",
+        "install_date": "2026-04-01 16:24:06"
+    },
+    {
+        "package_name": "com.google.android.rkpdapp",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:50"
+    },
+    {
+        "package_name": "com.android.providers.settings",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.overlay.gmssettingprovider",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.phone",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.nf.snake",
+        "version": "4.10.9",
+        "install_date": "2026-04-01 14:51:52"
+    },
+    {
+        "package_name": "com.google.android.apps.subscriptions.red",
+        "version": "1.306.900801193",
+        "install_date": "2025-02-26 20:06:29"
+    },
+    {
+        "package_name": "com.android.stk.overlay.miui",
+        "version": "1.0.3",
+        "install_date": "2025-02-26 20:06:29"
+    },
+    {
+        "package_name": "android.aosp.overlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.bluetooth.overlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.as.oss",
+        "version": "1.0.release.896393251",
+        "install_date": "2025-02-26 20:06:29"
+    },
+    {
+        "package_name": "com.android.contacts",
+        "version": "17.20.10.29",
+        "install_date": "2025-02-26 20:06:34"
+    },
+    {
+        "package_name": "com.digilocker.android",
+        "version": "9.2.9",
+        "install_date": "2026-04-01 15:36:41"
+    },
+    {
+        "package_name": "com.android.overlay.gmstelecomm",
+        "version": "1.0",
+        "install_date": "2025-02-26 20:06:28"
+    },
+    {
+        "package_name": "com.android.vpndialogs",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.screenshot",
+        "version": "RELEASE-1.5.3.51-12121737",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.overlay.gmsconfig.photos",
+        "version": "1.0",
+        "install_date": "2026-04-01 16:24:04"
+    },
+    {
+        "package_name": "com.google.android.tts",
+        "version": "googletts.google-speech-apk_20260331.04_p0.892709386",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.cellbroadcastreceiver.overlay.miui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.atmwifimeta",
+        "version": "2.1.01.00",
+        "install_date": "2026-04-01 16:24:06"
+    },
+    {
+        "package_name": "com.android.htmlviewer",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.vending",
+        "version": "51.0.19-31 [0] [PR] 897988648",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.overlay.modules.captiveportallogin.forframework",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.system.overlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.microsoft.deviceintegrationservice",
+        "version": "2.25044.7.1.0",
+        "install_date": "2026-04-20 14:38:48"
+    },
+    {
+        "package_name": "com.android.providers.settings.overlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.overlay.gmsconfig.gsa",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.capctrl.service",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.ims",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.providers.userdictionary",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.zeptoconsumerapp",
+        "version": "26.4.4",
+        "install_date": "2026-04-05 14:32:00"
+    },
+    {
+        "package_name": "com.android.providers.contactkeys",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:04"
+    },
+    {
+        "package_name": "com.google.android.overlay.gmsconfig.common",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.cts.ctsshim",
+        "version": "15",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.android.bluetooth",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.android.storagemanager",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.application.zomato",
+        "version": "19.5.8",
+        "install_date": "2026-04-03 19:47:27"
+    },
+    {
+        "package_name": "com.miui.cloudservice",
+        "version": "1.12.0.6.87",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.miui.miwallpaper.overlay",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.location.mtkgeofence",
+        "version": "16",
+        "install_date": "2026-04-20 14:38:49"
+    },
+    {
+        "package_name": "com.android.phone.overlay.miui",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.xiaomi.misettings",
+        "version": "15.03.1211.10-phone",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.providers.partnerbookmarks",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.provision",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.mediatek.gbaservice",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.ambient.streaming",
+        "version": "1.0.1085.0",
+        "install_date": "2025-02-26 20:06:27"
+    },
+    {
+        "package_name": "com.facebook.katana",
+        "version": "557.0.0.59.72",
+        "install_date": "2026-04-01 14:51:34"
+    },
+    {
+        "package_name": "com.android.dynsystem",
+        "version": "16",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.jiiov.fingerprint_factorytest",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.android.hotspot2.osulogin",
+        "version": "16",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.google.android.overlay.devicelockcontroller",
+        "version": "1.0",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.google.android.apps.adm",
+        "version": "3.1.547-1",
+        "install_date": "2026-04-01 15:40:38"
+    },
+    {
+        "package_name": "com.google.android.connectivity.resources",
+        "version": "S-initial",
+        "install_date": "2026-04-01 16:24:07"
+    },
+    {
+        "package_name": "com.google.android.youtube",
+        "version": "21.16.245",
+        "install_date": "2009-01-01 05:30:00"
+    },
+    {
+        "package_name": "com.supercell.clashroyale",
+        "version": "140593015",
+        "install_date": "2026-04-08 11:58:14"
+    }
+]
