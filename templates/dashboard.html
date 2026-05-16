@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NFSU Forensic Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--accent:#58a6ff;--green:#3fb950;--orange:#e3b341;--red:#f85149;--text:#e6edf3;--muted:#8b949e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+header{background:linear-gradient(135deg,#0d1117 0%,#161b22 100%);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;gap:16px}
+header h1{font-size:1.3rem;font-weight:800;background:linear-gradient(90deg,#58a6ff,#3fb950);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--muted);font-size:.85rem}
+.badge{background:#1f6feb33;color:var(--accent);border:1px solid #1f6feb;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
+.layout{display:grid;grid-template-columns:320px 1fr;min-height:calc(100vh - 65px)}
+.sidebar{background:var(--card);border-right:1px solid var(--border);padding:24px 16px;display:flex;flex-direction:column;gap:16px}
+.main{padding:24px;display:flex;flex-direction:column;gap:20px;overflow-y:auto}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px}
+.card h2{font-size:.9rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.btn{width:100%;padding:12px;border-radius:8px;border:none;font-family:'Inter',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:.2s}
+.btn-scan{background:linear-gradient(135deg,#1f6feb,#388bfd);color:#fff}
+.btn-scan:hover{opacity:.88}
+.btn-acquire{background:linear-gradient(135deg,#238636,#3fb950);color:#fff;margin-top:8px}
+.btn-acquire:hover{opacity:.88}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:12px}
+.stat-label{font-size:.7rem;color:var(--muted);text-transform:uppercase;font-weight:600}
+.stat-value{font-size:1rem;font-weight:700;color:var(--text);margin-top:4px;word-break:break-all}
+.stat-value.green{color:var(--green)}
+.stat-value.orange{color:var(--orange)}
+.stat-value.red{color:var(--red)}
+.stat-value.blue{color:var(--accent)}
+.progress-wrap{background:#0d1117;border-radius:6px;height:8px;overflow:hidden;margin-bottom:4px}
+.progress-bar{height:100%;border-radius:6px;background:linear-gradient(90deg,#1f6feb,#3fb950);transition:width .5s ease;width:0%}
+.progress-label{font-size:.8rem;color:var(--muted)}
+.log-box{background:#0d1117;border:1px solid var(--border);border-radius:8px;height:220px;overflow-y:auto;padding:12px;font-family:'JetBrains Mono',monospace;font-size:.75rem}
+.log-entry{padding:3px 0;border-bottom:1px solid #21262d}
+.log-entry .ts{color:var(--muted);margin-right:8px}
+.log-entry.info .msg{color:var(--text)}
+.log-entry.warning .msg{color:var(--orange)}
+.log-entry.success .msg{color:var(--green)}
+.log-entry.error .msg{color:var(--red)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px}
+.tab{padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s}
+.tab.active{background:var(--accent);color:#0d1117;border-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{background:#0d1117;color:var(--muted);text-align:left;padding:10px 12px;font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid #21262d;color:var(--text)}
+tr:hover td{background:#21262d}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.75rem;font-weight:600;background:#1f6feb22;color:var(--accent)}
+.root-banner{background:#e3b34122;border:1px solid var(--orange);border-left:4px solid var(--orange);border-radius:8px;padding:16px;display:flex;gap:12px;align-items:flex-start}
+.root-banner .icon{font-size:1.5rem}
+.root-banner .title{font-size:.75rem;font-weight:800;text-transform:uppercase;color:var(--orange);letter-spacing:.5px}
+.root-banner .desc{color:var(--muted);font-size:.85rem;margin-top:4px}
+.empty{color:var(--muted);font-size:.85rem;text-align:center;padding:30px}
+.status-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px}
+.dot-green{background:var(--green);box-shadow:0 0 8px var(--green)}
+.dot-orange{background:var(--orange)}
+.dot-red{background:var(--red)}
+.count-pill{display:inline-block;background:#1f6feb33;color:var(--accent);border-radius:12px;padding:1px 8px;font-size:.75rem;margin-left:8px}
+input[type=text]{width:100%;background:#0d1117;border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--text);font-family:'Inter',sans-serif;font-size:.85rem;margin-top:4px}
+input[type=text]:focus{outline:none;border-color:var(--accent)}
+.field-label{font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+#device-status{font-size:.8rem;padding:8px 12px;border-radius:6px;margin-top:8px;display:none}
+.status-ok{background:#3fb95022;color:var(--green);border:1px solid #3fb95044}
+.status-err{background:#f8514922;color:var(--red);border:1px solid #f8514944}
+#acq-status-badge{display:none}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>🔬 NFSU Forensic Acquisition</h1>
+    <p>Android Evidence Collection Dashboard</p>
+  </div>
+  <span class="badge" id="acq-status-badge">Running...</span>
+</header>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="card" style="padding:16px">
+      <div class="field-label">Case ID</div>
+      <input type="text" id="case-id" value="NFSU-2026-001">
+      <div class="field-label" style="margin-top:10px">Investigator</div>
+      <input type="text" id="investigator" value="Investigator">
+    </div>
+
+    <button class="btn btn-scan" id="btn-scan" onclick="scanDevice()">🔍 Scan Device</button>
+    <div id="device-status"></div>
+
+    <!-- Device Info Card -->
+    <div class="card" id="device-card" style="display:none">
+      <h2>📱 Device Info</h2>
+      <div class="stat-grid" id="device-stats"></div>
+    </div>
+
+    <button class="btn btn-acquire" id="btn-acquire" onclick="startAcquisition()" disabled>▶ Start Acquisition</button>
+
+    <!-- Progress -->
+    <div class="card" id="progress-card" style="display:none">
+      <h2>⚙️ Progress</h2>
+      <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+      <div class="progress-label" id="progress-label">Initializing...</div>
+    </div>
+
+    <!-- Live Log -->
+    <div class="card">
+      <h2>📋 Live Log</h2>
+      <div class="log-box" id="log-box"><div style="color:#8b949e;font-size:.75rem">Waiting for acquisition...</div></div>
+    </div>
+  </div>
+
+  <!-- MAIN PANEL -->
+  <div class="main">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('overview')">Overview</button>
+      <button class="tab" onclick="showTab('apps')">Apps <span class="count-pill" id="cnt-apps">0</span></button>
+      <button class="tab" onclick="showTab('calls')">Call Logs <span class="count-pill" id="cnt-calls">0</span></button>
+      <button class="tab" onclick="showTab('sms')">SMS <span class="count-pill" id="cnt-sms">0</span></button>
+      <button class="tab" onclick="showTab('browser')">Browser <span class="count-pill" id="cnt-browser">0</span></button>
+      <button class="tab" onclick="showTab('storage')">Storage <span class="count-pill" id="cnt-storage">0</span></button>
+      <button class="tab" onclick="showTab('integrity')">Integrity <span class="count-pill" id="cnt-integrity">0</span></button>
+      <button class="tab" onclick="showTab('timeline')">Timeline</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="tab-panel active" id="tab-overview">
+      <div class="card">
+        <h2>📊 Acquisition Overview</h2>
+        <div id="overview-placeholder" class="empty">Connect and scan a device, then start acquisition to see results here.</div>
+        <div id="overview-stats" style="display:none">
+          <div class="stat-grid" id="overview-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apps -->
+    <div class="tab-panel" id="tab-apps">
+      <div class="card">
+        <h2>📦 Installed Applications</h2>
+        <div id="apps-content"><div class="empty">No data yet.</div></div>
+      </div>
+    </div>
+
+    <!-- Calls -->
+    <div class="tab-panel" id="tab-calls">
+      <div class="card">
+        <h2>📞 Call Logs</h2>
+        <div id="calls-content"><div class="empty">No data yet.</div></div>
+      </div>
+    </div>
+
+    <!-- SMS -->
+    <div class="tab-panel" id="tab-sms">
+      <div class="card">
+        <h2>💬 SMS Messages</h2>
+        <div id="sms-content"><div class="empty">No data yet.</div></div>
+      </div>
+    </div>
+
+    <!-- Browser -->
+    <div class="tab-panel" id="tab-browser">
+      <div class="card">
+        <h2>🌐 Browser History</h2>
+        <div id="browser-content"><div class="empty">No data yet.</div></div>
+      </div>
+    </div>
+
+    <!-- Storage -->
+    <div class="tab-panel" id="tab-storage">
+      <div class="card">
+        <h2>💾 Storage Manifest</h2>
+        <div id="storage-content"><div class="empty">No data yet.</div></div>
+      </div>
+    </div>
+
+    <!-- Integrity -->
+    <div class="tab-panel" id="tab-integrity">
+      <div class="card">
+        <h2>🔐 Integrity Hashes (SHA-256)</h2>
+        <div id="integrity-content"><div class="empty">No data yet.</div></div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="tab-panel" id="tab-timeline">
+      <div class="card">
+        <h2>🕒 Forensic Timeline</h2>
+        <div id="timeline-content"><div class="empty">No events yet.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const STEPS = 10;
+let currentDevice = null;
+
+function showTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function log(msg, level = 'info') {
+  const box = document.getElementById('log-box');
+  const now = new Date().toISOString().replace('T', ' ').substring(0, 23) + 'Z';
+  const d = document.createElement('div');
+  d.className = `log-entry ${level}`;
+  d.innerHTML = `<span class="ts">${now}</span><span class="msg">${msg}</span>`;
+  box.appendChild(d);
+  box.scrollTop = box.scrollHeight;
+}
+
+function setStat(id, val, cls = '') {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = val; el.className = 'stat-value ' + cls; }
+}
+
+function setProgress(step, label) {
+  const pct = Math.round((step / STEPS) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `[${step}/${STEPS}] ${label}`;
+}
+
+async function scanDevice() {
+  const btn = document.getElementById('btn-scan');
+  btn.disabled = true; btn.textContent = '🔄 Scanning...';
+  const ds = document.getElementById('device-status');
+  ds.style.display = 'none';
+  log('Scanning for connected Android device...');
+
+  try {
+    const r = await fetch('/api/scan', { method: 'POST' });
+    const data = await r.json();
+    if (data.success) {
+      currentDevice = data.device;
+      renderDeviceCard(data.device);
+      ds.textContent = `Connected: ${data.device.brand || data.device.manufacturer} ${data.device.model} (Android ${data.device.android_version})`;
+      ds.className = 'status-ok'; ds.style.display = 'block';
+      document.getElementById('btn-acquire').disabled = false;
+      log(`Device found: ${data.device.manufacturer} ${data.device.model} (Android ${data.device.android_version})`, 'success');
+      log(`Serial: ${data.device.serial}  |  SDK: ${data.device.sdk_version}  |  CPU: ${data.device.cpu_abi}`, 'info');
+      log(`Battery: ${data.device.battery}%  |  Uptime: ${data.device.uptime}  |  Apps: ${data.device.app_count}`, 'info');
+      log(`Security Patch: ${data.device.security_patch}`, 'info');
+      if (data.device.clock_drift_ms !== null)
+        log(`Clock drift vs system: ${data.device.clock_drift_ms > 0 ? '+' : ''}${data.device.clock_drift_ms}ms`, 'info');
+    } else {
+      ds.innerHTML = '<strong>No device found:</strong><br>' + (data.error || 'Unknown error').replace(/\n/g, '<br>');
+      ds.className = 'status-err'; ds.style.display = 'block';
+      log('Scan failed: ' + (data.error || '').split('\n')[0], 'error');
+      document.getElementById('btn-acquire').disabled = true;
+    }
+  } catch(e) {
+    log('Network error: ' + e.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = '🔍 Scan Device';
+}
+
+function renderDeviceCard(d) {
+  const card = document.getElementById('device-card');
+  card.style.display = 'block';
+  const bat = parseInt(d.battery) || 0;
+  const batCls = bat > 50 ? 'green' : bat > 20 ? 'orange' : 'red';
+  const driftCls = Math.abs(d.clock_drift_ms || 0) < 500 ? 'green' : 'orange';
+  document.getElementById('device-stats').innerHTML = `
+    <div class="stat"><div class="stat-label">Model</div><div class="stat-value blue">${d.model}</div></div>
+    <div class="stat"><div class="stat-label">Brand / Maker</div><div class="stat-value">${d.brand || d.manufacturer}</div></div>
+    <div class="stat"><div class="stat-label">Serial No.</div><div class="stat-value" style="font-family:JetBrains Mono,monospace;font-size:.78rem">${d.serial}</div></div>
+    <div class="stat"><div class="stat-label">Android Version</div><div class="stat-value blue">${d.android_version} (SDK ${d.sdk_version || '?'})</div></div>
+    <div class="stat"><div class="stat-label">Battery</div><div class="stat-value ${batCls}">${d.battery}%</div></div>
+    <div class="stat"><div class="stat-label">Clock Drift</div><div class="stat-value ${driftCls}">${d.clock_drift_ms !== null ? (d.clock_drift_ms > 0 ? '+' : '') + d.clock_drift_ms + 'ms' : 'N/A'}</div></div>
+    <div class="stat"><div class="stat-label">CPU / ABI</div><div class="stat-value">${d.cpu_abi || 'N/A'}</div></div>
+    <div class="stat"><div class="stat-label">IP Address</div><div class="stat-value">${d.ip_address || 'N/A'}</div></div>
+    <div class="stat"><div class="stat-label">Security Patch</div><div class="stat-value">${d.security_patch || 'N/A'}</div></div>
+    <div class="stat"><div class="stat-label">Kernel</div><div class="stat-value" style="font-size:.78rem">${d.kernel || 'N/A'}</div></div>
+    <div class="stat"><div class="stat-label">Device Uptime</div><div class="stat-value">${d.uptime || 'N/A'}</div></div>
+    <div class="stat"><div class="stat-label">Installed Apps</div><div class="stat-value green">${d.app_count || 'N/A'}</div></div>
+    ${d.storage && d.storage.total_gb ? `<div class="stat" style="grid-column:span 2"><div class="stat-label">Internal Storage</div><div style="margin-top:6px"><div class="progress-wrap"><div class="progress-bar" style="width:${d.storage.used_pct}%;background:linear-gradient(90deg,#58a6ff,#3fb950)"></div></div><div style="font-size:.75rem;color:var(--muted);margin-top:4px">${d.storage.used_gb} GB used of ${d.storage.total_gb} GB (${d.storage.used_pct}% full — ${d.storage.free_gb} GB free)</div></div></div>` : ''}
+    <div class="stat" style="grid-column:span 2"><div class="stat-label">Device Time (UTC)</div><div class="stat-value" style="font-size:.85rem;font-family:JetBrains Mono,monospace">${d.device_time}</div></div>
+    <div class="stat" style="grid-column:span 2"><div class="stat-label">Build Fingerprint</div><div class="stat-value" style="font-size:.7rem;word-break:break-all;color:var(--muted)">${d.build_fingerprint || 'N/A'}</div></div>
+  `;
+}
+
+function rootBanner(type) {
+  return `<div class="root-banner"><div class="icon">⚠️</div><div><div class="title">Data Unavailable — Root Required</div><div class="desc">The ${type} database was pulled as 0 bytes. ADB was blocked by Android permissions. Root access is required to extract this data. This has been recorded in the forensic timeline.</div></div></div>`;
+}
+
+function makeTable(headers, rows, emptyMsg = 'No records found.') {
+  if (!rows || rows.length === 0) return `<div class="empty">${emptyMsg}</div>`;
+  const ths = headers.map(h => `<th>${h}</th>`).join('');
+  const trs = rows.map(r => `<tr>${r}</tr>`).join('');
+  return `<table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table>`;
+}
+
+async function startAcquisition() {
+  const btn = document.getElementById('btn-acquire');
+  btn.disabled = true;
+  document.getElementById('progress-card').style.display = 'block';
+  document.getElementById('acq-status-badge').style.display = 'inline-block';
+  document.getElementById('acq-status-badge').textContent = '⚙️ Running';
+  document.getElementById('log-box').innerHTML = '';
+  log('Starting forensic acquisition...', 'info');
+
+  const body = {
+    case_id: document.getElementById('case-id').value,
+    investigator: document.getElementById('investigator').value
+  };
+
+  const r = await fetch('/api/acquire', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
+  const { session_id } = await r.json();
+
+  const es = new EventSource(`/api/stream/${session_id}`);
+
+  es.addEventListener('progress', e => {
+    const d = JSON.parse(e.data);
+    setProgress(d.step, d.label);
+  });
+
+  es.addEventListener('timeline', e => {
+    const d = JSON.parse(e.data);
+    log(d.message, d.level || 'info');
+    renderTimelineEntry(d);
+  });
+
+  es.addEventListener('device_info', e => {
+    const d = JSON.parse(e.data);
+    renderDeviceCard({...d, ...currentDevice});
+  });
+
+  es.addEventListener('installed_apps', e => {
+    const d = JSON.parse(e.data);
+    document.getElementById('cnt-apps').textContent = d.count;
+    const rows = d.apps.map(a => `<td>${a.package_name}</td><td><span class="tag">${a.version||'?'}</span></td><td style="font-size:.78rem;color:var(--muted)">${a.install_date||'?'}</td>`);
+    document.getElementById('apps-content').innerHTML = makeTable(['Package Name','Version','Install Date'], rows, 'No apps found.');
+    updateOverview('apps', d.count);
+  });
+
+  es.addEventListener('call_logs', e => {
+    const d = JSON.parse(e.data);
+    document.getElementById('cnt-calls').textContent = d.count;
+    document.getElementById('calls-content').innerHTML = d.root_required
+      ? rootBanner('Call Log')
+      : makeTable(['Number','Name','Date','Duration(s)'],
+          d.calls.map(c => `<td>${c.number||'?'}</td><td>${c.name||'—'}</td><td>${c.date||'?'}</td><td><span class="tag">${c.duration||0}s</span></td>`));
+    updateOverview('calls', d.count, d.root_required);
+  });
+
+  es.addEventListener('sms_messages', e => {
+    const d = JSON.parse(e.data);
+    document.getElementById('cnt-sms').textContent = d.count;
+    document.getElementById('sms-content').innerHTML = d.root_required
+      ? rootBanner('SMS')
+      : makeTable(['Address','Body','Date'],
+          d.messages.map(m => `<td><strong>${m.address||'?'}</strong></td><td>${m.body||''}</td><td style="font-size:.78rem;color:var(--muted)">${m.date||'?'}</td>`));
+    updateOverview('sms', d.count, d.root_required);
+  });
+
+  es.addEventListener('browser_history', e => {
+    const d = JSON.parse(e.data);
+    document.getElementById('cnt-browser').textContent = d.count;
+    document.getElementById('browser-content').innerHTML = d.root_required
+      ? rootBanner('Browser History')
+      : makeTable(['URL','Title','Visits','Last Visit'],
+          d.history.map(h => `<td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><a href="${h.url}" target="_blank" style="color:var(--accent)">${h.url}</a></td><td>${h.title||'?'}</td><td>${h.visit_count||0}</td><td style="font-size:.78rem;color:var(--muted)">${h.last_visit||'?'}</td>`));
+    updateOverview('browser', d.count, d.root_required);
+  });
+
+  es.addEventListener('storage_files', e => {
+    const d = JSON.parse(e.data);
+    document.getElementById('cnt-storage').textContent = d.count;
+    const rows = d.files.map(f => `<td style="font-size:.78rem;color:var(--muted);max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${f.path}</td><td>${f.filename}</td><td>${(f.size_bytes/1024).toFixed(1)}KB</td><td style="font-family:JetBrains Mono,monospace;font-size:.7rem;color:var(--muted)">${(f.sha256||'').substring(0,16)}...</td>`);
+    document.getElementById('storage-content').innerHTML = makeTable(['Path','Filename','Size','SHA-256'], rows, 'No files found.');
+  });
+
+  es.addEventListener('integrity', e => {
+    const d = JSON.parse(e.data);
+    document.getElementById('cnt-integrity').textContent = d.hashes.length;
+    const rows = d.hashes.map(h => `<td><strong>${h.filename}</strong></td><td style="font-family:JetBrains Mono,monospace;font-size:.75rem;color:#e83e8c;word-break:break-all">${h.hash}</td>`);
+    document.getElementById('integrity-content').innerHTML = makeTable(['File','SHA-256 Hash'], rows);
+  });
+
+  es.addEventListener('complete', e => {
+    es.close();
+    const d = JSON.parse(e.data);
+    setProgress(10, 'Complete!');
+    document.getElementById('acq-status-badge').textContent = '✅ Done';
+    document.getElementById('acq-status-badge').style.background = '#3fb95033';
+    document.getElementById('acq-status-badge').style.color = 'var(--green)';
+    log('✅ Acquisition complete!', 'success');
+    log(`Report saved: ${d.report_path}`, 'info');
+    btn.disabled = false;
+  });
+
+  es.addEventListener('error', e => {
+    try {
+      const d = JSON.parse(e.data);
+      log('ERROR: ' + d.message, 'error');
+    } catch(_) {
+      // stream closed normally
+    }
+    es.close();
+    btn.disabled = false;
+    document.getElementById('acq-status-badge').textContent = '❌ Error';
+  });
+}
+
+const timelineRows = [];
+function renderTimelineEntry(entry) {
+  timelineRows.push(entry);
+  const rows = timelineRows.map(e => {
+    const cls = e.level === 'warning' ? 'color:var(--orange)' : e.level === 'success' ? 'color:var(--green)' : e.level === 'error' ? 'color:var(--red)' : 'color:var(--text)';
+    return `<td style="font-family:JetBrains Mono,monospace;font-size:.75rem;color:var(--muted);white-space:nowrap">${e.timestamp}</td><td style="${cls}">${e.message}</td>`;
+  }).map(r => `<tr>${r}</tr>`).join('');
+  document.getElementById('timeline-content').innerHTML = `<table><thead><tr><th>Timestamp (UTC)</th><th>Event</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+const overviewData = {};
+function updateOverview(key, count, rootRequired = false) {
+  overviewData[key] = { count, rootRequired };
+  const labels = { apps:'Installed Apps', calls:'Call Records', sms:'SMS Messages', browser:'Browser URLs' };
+  let html = '';
+  for (const [k, info] of Object.entries(overviewData)) {
+    const cls = info.rootRequired ? 'orange' : 'green';
+    const val = info.rootRequired ? '⚠ Root Req.' : info.count;
+    html += `<div class="stat"><div class="stat-label">${labels[k]||k}</div><div class="stat-value ${cls}">${val}</div></div>`;
+  }
+  document.getElementById('overview-placeholder').style.display = 'none';
+  document.getElementById('overview-stats').style.display = 'block';
+  document.getElementById('overview-grid').innerHTML = html;
+}
+</script>
+</body>
+</html>

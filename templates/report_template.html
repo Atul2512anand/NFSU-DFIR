@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forensic Acquisition Report - {{ case_info.case_id }}</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f7f6; }
+        .container { max-width: 1000px; margin: 20px auto; background: #fff; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px; }
+        header { border-bottom: 3px solid #2c3e50; padding-bottom: 20px; margin-bottom: 30px; }
+        h1 { color: #2c3e50; margin: 0; }
+        h2 { border-left: 5px solid #3498db; padding-left: 10px; color: #2980b9; margin-top: 40px; }
+        .meta-info { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; background: #ecf0f1; padding: 20px; border-radius: 5px; }
+        .meta-item { font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f8f9fa; color: #2c3e50; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .integrity-hash { font-family: 'Courier New', Courier, monospace; background: #eee; padding: 2px 5px; border-radius: 3px; font-size: 0.9em; word-break: break-all; }
+        .footer { margin-top: 50px; text-align: center; font-size: 0.8em; color: #7f8c8d; border-top: 1px solid #eee; padding-top: 20px; }
+        .summary-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; margin-bottom: 10px; display: inline-block; min-width: 150px; text-align: center; }
+        .summary-card .count { font-size: 1.5em; font-weight: bold; color: #e67e22; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Forensic Acquisition Report</h1>
+            <p>Generated on: {{ case_info.report_date }} (UTC)</p>
+        </header>
+
+        <section id="cover">
+            <h2>Case Information</h2>
+            <div class="meta-info">
+                <div><span class="meta-item">Case ID:</span> {{ case_info.case_id }}</div>
+                <div><span class="meta-item">Investigator:</span> {{ case_info.investigator }}</div>
+                <div><span class="meta-item">Device Serial:</span> {{ case_info.device_serial }}</div>
+                <div><span class="meta-item">Device Model:</span> {{ case_info.device_model }}</div>
+                <div><span class="meta-item">Android Version:</span> {{ case_info.android_version }}</div>
+                <div><span class="meta-item">Acquisition Mode:</span> Logical</div>
+            </div>
+        </section>
+
+        <section id="integrity">
+            <h2>Data Integrity (Hashes)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>SHA-256 Hash</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in integrity_data %}
+                    <tr>
+                        <td>{{ item.filename }}</td>
+                        <td class="integrity-hash">{{ item.hash }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section id="summary">
+            <h2>Artefact Summary</h2>
+            <div class="summary-card">
+                <div class="count">{{ evidence.call_logs|length }}</div>
+                <div>Call Logs</div>
+            </div>
+            <div class="summary-card">
+                <div class="count">{{ evidence.sms_messages|length }}</div>
+                <div>SMS Messages</div>
+            </div>
+            <div class="summary-card">
+                <div class="count">{{ evidence.installed_apps|length }}</div>
+                <div>Installed Apps</div>
+            </div>
+        </section>
+
+        <section id="call_logs">
+            <h2>Call Logs</h2>
+            {% if evidence.call_logs %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Duration (s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for call in evidence.call_logs[:20] %}
+                    <tr>
+                        <td>{{ call.number }}</td>
+                        <td>{{ call.name or 'Unknown' }}</td>
+                        <td>{{ call.date }}</td>
+                        <td>{{ call.duration }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if evidence.call_logs|length > 20 %}<p><em>Showing first 20 records...</em></p>{% endif %}
+            {% else %}
+            <p>No call logs were recovered.</p>
+            {% endif %}
+        </section>
+
+        <section id="sms">
+            <h2>SMS Messages</h2>
+            {% if evidence.sms_messages %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>Date</th>
+                        <th>Body</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for msg in evidence.sms_messages[:20] %}
+                    <tr>
+                        <td>{{ msg.address }}</td>
+                        <td>{{ msg.date }}</td>
+                        <td>{{ msg.body }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if evidence.sms_messages|length > 20 %}<p><em>Showing first 20 records...</em></p>{% endif %}
+            {% else %}
+            <p>No SMS messages were recovered.</p>
+            {% endif %}
+        </section>
+
+        <section id="timeline">
+            <h2>Acquisition Timeline</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time (UTC)</th>
+                        <th>Event Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in timeline %}
+                    <tr>
+                        <td>{{ event.timestamp }}</td>
+                        <td>{{ event.message }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <div class="footer">
+            <p>This report was generated by the Antigravity Forensic Tool.</p>
+            <p>Confidential - Authorized Personnel Only</p>
+        </div>
+    </div>
+</body>
+</html>

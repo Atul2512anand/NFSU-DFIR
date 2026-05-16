@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forensic Evidence Report - {{ case_info.case_id }}</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --success-color: #27ae60;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .report-wrapper {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 40px;
+            border-radius: 8px 8px 0 0;
+            text-align: left;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            letter-spacing: -0.5px;
+        }
+
+        header .report-meta {
+            margin-top: 10px;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-group {
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #7f8c8d;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .info-value {
+            font-size: 1.1em;
+            color: var(--primary-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+
+        th {
+            background: #f1f3f5;
+            color: var(--primary-color);
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:hover {
+            background-color: #fdfdfe;
+        }
+
+        .hash-code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            background: #f4f6f8;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            word-break: break-all;
+            color: #e83e8c;
+        }
+
+        .tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            background: #e9ecef;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            padding: 40px;
+            color: #95a5a6;
+            font-size: 0.85em;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-success { background: #d4edda; color: #155724; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        .badge-danger { background: #f8d7da; color: #721c24; }
+
+        .root-required-banner {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-left: 5px solid #e67e22;
+            border-radius: 6px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #7d4e00;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .root-required-banner .icon {
+            font-size: 1.8em;
+            flex-shrink: 0;
+        }
+
+        .root-required-banner .label {
+            font-size: 0.75em;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #e67e22;
+        }
+
+        @media (max-width: 768px) {
+            .report-wrapper { margin: 10px auto; }
+            .section-card { padding: 15px; }
+            header { padding: 25px; }
+            table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-wrapper">
+        <header>
+            <h1>Forensic Evidence Report</h1>
+            <div class="report-meta">
+                Started: {{ case_info.start_time }} | Ended: {{ case_info.end_time }} | Investigator: {{ case_info.investigator }}
+            </div>
+        </header>
+
+        <section class="section-card">
+            <h2>Acquisition Overview</h2>
+            <div class="grid">
+                <div class="info-group">
+                    <span class="info-label">Case ID</span>
+                    <span class="info-value">{{ case_info.case_id }}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Device Serial</span>
+                    <span class="info-value">{{ case_info.device_serial }}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Device Model</span>
+                    <span class="info-value">{{ case_info.device_model }}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Android Version</span>
+                    <span class="info-value">{{ case_info.android_version }}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Acquisition Duration</span>
+                    <span class="info-value">{{ case_info.duration }}</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2>Acquisition Summary</h2>
+            <div class="grid">
+                <div class="info-group">
+                    <span class="info-label">Successful Artefacts</span>
+                    <span class="info-value"><span class="badge badge-success">Installed Apps</span> <span class="badge badge-success">Browser History</span></span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Partially Accessible</span>
+                    <span class="info-value"><span class="badge badge-warning">Call Logs (Logical)</span> <span class="badge badge-warning">SMS (Logical)</span></span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Inaccessible Artefacts</span>
+                    <span class="info-value">
+                        {% if not evidence.whatsapp_accessible %}<span class="badge badge-danger">WhatsApp</span>{% endif %}
+                        {% if evidence.call_logs_root_required %}<span class="badge badge-danger">Call Logs (Physical)</span>{% endif %}
+                        {% if evidence.sms_root_required %}<span class="badge badge-danger">SMS (Physical)</span>{% endif %}
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2>Integrity Summary</h2>
+            <p style="font-size: 0.9em; color: #666;">Cryptographic hashes for evidence verification.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Filename</th>
+                        <th>SHA-256 Hash</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in integrity_data %}
+                    <tr>
+                        <td><strong>{{ item.filename }}</strong></td>
+                        {% if item.hash == 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' %}
+                        <td><span class="badge badge-warning" style="font-size: 0.85em; text-transform: none;">Acquisition Attempted — Data Inaccessible</span></td>
+                        {% else %}
+                        <td><span class="hash-code">{{ item.hash }}</span></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section-card">
+            <h2>Call Log Records</h2>
+            {% if evidence.call_logs %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Contact Name</th>
+                        <th>Timestamp (UTC)</th>
+                        <th>Duration</th>
+                        <th>Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for call in evidence.call_logs[:50] %}
+                    <tr>
+                        <td>{{ call.number }}</td>
+                        <td>{{ call.name or '---' }}</td>
+                        <td>{{ call.date }}</td>
+                        <td><span class="tag">{{ call.duration }}s</span></td>
+                        <td><span class="tag" style="font-size: 0.7em;">{{ call.acquisition_method | default('physical_sqlite') }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% elif evidence.call_logs_root_required is defined and evidence.call_logs_root_required %}
+            <div class="root-required-banner">
+                <span class="icon">⚠️</span>
+                <div>
+                    <div class="label">Android provider permission denied</div>
+                    READ_CALL_LOG not granted to adb shell context.
+                </div>
+            </div>
+            {% else %}
+            <p>No call records found on device.</p>
+            {% endif %}
+        </section>
+
+        <section class="section-card">
+            <h2>SMS Messages</h2>
+            {% if evidence.sms_messages %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>Message Content</th>
+                        <th>Timestamp (UTC)</th>
+                        <th>Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for msg in evidence.sms_messages[:50] %}
+                    <tr>
+                        <td style="white-space: nowrap;"><strong>{{ msg.address }}</strong></td>
+                        <td>{{ msg.body }}</td>
+                        <td style="white-space: nowrap;">{{ msg.date }}</td>
+                        <td><span class="tag" style="font-size: 0.7em;">{{ msg.acquisition_method | default('physical_sqlite') }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% elif evidence.sms_root_required is defined and evidence.sms_root_required %}
+            <div class="root-required-banner">
+                <span class="icon">⚠️</span>
+                <div>
+                    <div class="label">Data Unavailable (Root Required)</div>
+                    The SMS database could not be acquired. The device is not rooted,
+                    or ADB does not have sufficient permissions to read
+                    <code>/data/data/com.android.providers.telephony/databases/mmssms.db</code>.
+                    A 0-byte placeholder was recorded in the evidence manifest.
+                </div>
+            </div>
+            {% else %}
+            <p>No SMS messages found on device.</p>
+            {% endif %}
+        </section>
+
+        <section class="section-card">
+            <h2>Installed Applications</h2>
+            {% if evidence.installed_apps %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Package Name</th>
+                        <th>Version</th>
+                        <th>Install Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app in evidence.installed_apps %}
+                    <tr>
+                        <td>{{ app.package_name }}</td>
+                        <td><span class="tag">{{ app.version }}</span></td>
+                        <td>{{ app.install_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No application metadata found.</p>
+            {% endif %}
+        </section>
+
+        <section class="section-card">
+            <h2>WhatsApp Artefacts</h2>
+            {% if evidence.whatsapp_accessible %}
+            <p>WhatsApp database extracted successfully.</p>
+            {% else %}
+            <div class="root-required-banner">
+                <span class="icon">⚠️</span>
+                <div>
+                    <div class="label">Data Unavailable (Root Required)</div>
+                    WhatsApp databases inaccessible on non-rooted production emulator.
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="section-card">
+            <h2>Unified Forensic Timeline</h2>
+            {% if unified_timeline %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time (UTC)</th>
+                        <th>Category</th>
+                        <th>Event Summary</th>
+                        <th>Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in unified_timeline %}
+                    <tr>
+                        <td style="white-space: nowrap; color: #7f8c8d;">{{ item.timestamp }}</td>
+                        <td>
+                            {% if item.category == 'SMS' %}
+                            <span class="badge" style="background: #e3f2fd; color: #0d47a1;">SMS</span>
+                            {% elif item.category == 'CALL' %}
+                            <span class="badge" style="background: #e8f5e9; color: #1b5e20;">CALL</span>
+                            {% elif item.category == 'APP' %}
+                            <span class="badge" style="background: #fff3e0; color: #e65100;">APP</span>
+                            {% elif item.category == 'BROWSER' %}
+                            <span class="badge" style="background: #f3e5f5; color: #4a148c;">BROWSER</span>
+                            {% else %}
+                            <span class="badge">{{ item.category }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.summary }}</td>
+                        <td><span class="tag" style="font-size: 0.7em;">{{ item.method }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No timeline events available.</p>
+            {% endif %}
+        </section>
+
+        <section class="section-card">
+            <h2>Acquisition Timeline</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time (UTC)</th>
+                        <th>Forensic Event</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in timeline %}
+                    <tr>
+                        <td style="white-space: nowrap; color: #7f8c8d;">{{ event.timestamp }}</td>
+                        <td>{{ event.message }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <footer>
+            <p>Antigravity Forensic Acquisition Tool v1.0</p>
+            <p>This document is generated automatically. Do not modify the content once acquired.</p>
+            <p>&copy; 2026 Forensic Investigation Unit</p>
+        </footer>
+    </div>
+</body>
+</html>
