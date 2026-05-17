@@ -39,7 +39,7 @@ def dummy_case_info():
 
 @pytest.fixture
 def dummy_integrity():
-    return [{"filename": "contacts2.db",
+    return [{"filename": "calllog.db",
              "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
             {"filename": "mmssms.db",
              "hash": "abcdef123456"}]

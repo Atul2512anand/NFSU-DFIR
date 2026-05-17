@@ -39,9 +39,9 @@ class ForensicReporter:
     def _check_root_flags(self, evidence: dict, artefacts_dir: Path):
         """Injects root required flags for empty databases."""
         _zero_byte_checks = [
-            (artefacts_dir / "contacts2.db", "call_logs_root_required"),
-            (artefacts_dir / "mmssms.db", "sms_root_required"),
-            (artefacts_dir / "Chrome_History", "browser_root_required"),
+            (artefacts_dir / "call_log" / "calllog.db", "call_logs_root_required"),
+            (artefacts_dir / "sms" / "mmssms.db", "sms_root_required"),
+            (artefacts_dir / "browser_history" / "Chrome_History", "browser_root_required"),
         ]
         for db_path, flag_key in _zero_byte_checks:
             if db_path.exists() and db_path.stat().st_size == 0:

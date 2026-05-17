@@ -22,7 +22,7 @@ def mock_sms_db(tmp_path):
 
 @pytest.fixture
 def mock_calllog_db(tmp_path):
-    db_path = tmp_path / "contacts2.db"
+    db_path = tmp_path / "calllog.db"
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cursor.execute(

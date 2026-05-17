@@ -85,7 +85,7 @@ def _extract_call_logs(extractor, paths, timeline, add_event):
                     fallback_call_logs = True
         except Exception:
             pass
-    _check_zero_byte(paths.sub_artefacts["call_log"] / "contacts2.db", "Call Log", timeline, add_event, fallback_occurred=fallback_call_logs)
+    _check_zero_byte(paths.sub_artefacts["call_log"] / "calllog.db", "Call Log", timeline, add_event, fallback_occurred=fallback_call_logs)
     if getattr(extractor, "call_log_permission_denied", False):
         add_event("Android provider permission denied: READ_CALL_LOG not granted to adb shell context.")
 
@@ -103,7 +103,7 @@ def _extract_sms(extractor, paths, timeline, add_event):
                     fallback_sms = True
         except Exception:
             pass
-    _check_zero_byte(paths.artefacts / "mmssms.db", "SMS", timeline, add_event, fallback_occurred=fallback_sms)
+    _check_zero_byte(paths.sub_artefacts["sms"] / "mmssms.db", "SMS", timeline, add_event, fallback_occurred=fallback_sms)
 
 
 def _perform_extractions(device, paths, timeline, add_event) -> bool:
@@ -119,7 +119,7 @@ def _perform_extractions(device, paths, timeline, add_event) -> bool:
 
     add_event("Extracting Chrome history...")
     extractor.extract_browser_history()
-    _check_zero_byte(paths.artefacts / "Chrome_History", "Browser History", timeline, add_event)
+    _check_zero_byte(paths.sub_artefacts["browser_history"] / "Chrome_History", "Browser History", timeline, add_event)
 
     add_event("Extracting WhatsApp databases...")
     whatsapp_path = extractor.extract_whatsapp()
@@ -156,6 +156,7 @@ def _load_evidence_summary(paths, whatsapp_accessible: bool):
         "call_logs": [],
         "sms_messages": [],
         "installed_apps": [],
+        "browser_history": [],
         "whatsapp_accessible": whatsapp_accessible
     }
     call_log_path = paths.sub_artefacts["call_log"] / "call_logs.json"
@@ -163,7 +164,7 @@ def _load_evidence_summary(paths, whatsapp_accessible: bool):
         with open(call_log_path, "r") as f:
             evidence_summary["call_logs"] = json.load(f)
 
-    sms_path = paths.artefacts / "sms_messages.json"
+    sms_path = paths.sub_artefacts["sms"] / "sms_messages.json"
     if sms_path.exists():
         with open(sms_path, "r") as f:
             evidence_summary["sms_messages"] = json.load(f)
@@ -172,6 +173,12 @@ def _load_evidence_summary(paths, whatsapp_accessible: bool):
     if apps_path.exists():
         with open(apps_path, "r") as f:
             evidence_summary["installed_apps"] = json.load(f)
+
+    browser_path = paths.sub_artefacts["browser_history"] / "browser_history.json"
+    if browser_path.exists():
+        with open(browser_path, "r") as f:
+            evidence_summary["browser_history"] = json.load(f)
+            
     return evidence_summary
 
 

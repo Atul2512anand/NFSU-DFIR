@@ -251,8 +251,8 @@ def start_acquisition():
             _emit(q, "progress", {"step": 4, "label": "Extracting call logs..."})
             add_event("Extracting call log database...")
             extractor.extract_call_logs()
-            call_db = paths.artefacts / "contacts2.db"
-            call_json = paths.artefacts / "call_logs.json"
+            call_db = paths.sub_artefacts["call_log"] / "calllog.db"
+            call_json = paths.sub_artefacts["call_log"] / "call_logs.json"
             calls = []
             call_root_required = False
             if call_db.exists() and call_db.stat().st_size == 0:
@@ -270,8 +270,8 @@ def start_acquisition():
             _emit(q, "progress", {"step": 5, "label": "Extracting SMS messages..."})
             add_event("Extracting SMS database...")
             extractor.extract_sms()
-            sms_db   = paths.artefacts / "mmssms.db"
-            sms_json = paths.artefacts / "sms_messages.json"
+            sms_db   = paths.sub_artefacts["sms"] / "mmssms.db"
+            sms_json = paths.sub_artefacts["sms"] / "sms_messages.json"
             sms_msgs = []
             sms_root_required = False
             if sms_db.exists() and sms_db.stat().st_size == 0:
@@ -289,8 +289,8 @@ def start_acquisition():
             _emit(q, "progress", {"step": 6, "label": "Extracting browser history..."})
             add_event("Extracting Chrome browser history...")
             extractor.extract_browser_history()
-            brow_db   = paths.artefacts / "Chrome_History"
-            brow_json = paths.artefacts / "browser_history.json"
+            brow_db   = paths.sub_artefacts["browser_history"] / "Chrome_History"
+            brow_json = paths.sub_artefacts["browser_history"] / "browser_history.json"
             history   = []
             brow_root_required = False
             if brow_db.exists() and brow_db.stat().st_size == 0:
@@ -308,7 +308,7 @@ def start_acquisition():
             _emit(q, "progress", {"step": 7, "label": "Mapping external storage..."})
             add_event("Scanning /sdcard/ storage metadata...")
             extractor.extract_storage_metadata(filename="storage_manifest.json")
-            stor_path = paths.artefacts / "storage_manifest.json"
+            stor_path = paths.sub_artefacts["media_metadata"] / "storage_manifest.json"
             storage_files = []
             if stor_path.exists():
                 with open(stor_path, "r") as f:

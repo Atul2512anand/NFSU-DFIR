@@ -349,6 +349,44 @@
         </section>
 
         <section class="section-card">
+            <h2>Browser Database Acquisition</h2>
+            {% if evidence.browser_history %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>URL</th>
+                        <th>Title</th>
+                        <th>Last Visit Time (UTC)</th>
+                        <th>Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for visit in evidence.browser_history[:50] %}
+                    <tr>
+                        <td style="word-break: break-all;"><a href="{{ visit.url }}" target="_blank" style="color: var(--accent-color); text-decoration: none;">{{ visit.url[:60] }}{% if visit.url|length > 60 %}...{% endif %}</a></td>
+                        <td>{{ visit.title }}</td>
+                        <td style="white-space: nowrap;">{{ visit.last_visit }}</td>
+                        <td><span class="tag" style="font-size: 0.7em;">{{ visit.acquisition_method | default('physical_sqlite') }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p style="margin-top: 15px; font-weight: bold;">Total extracted URLs: {{ evidence.browser_history | length }}</p>
+            {% elif evidence.browser_root_required is defined and evidence.browser_root_required %}
+            <div class="root-required-banner">
+                <span class="icon">⚠️</span>
+                <div>
+                    <div class="label">Data Unavailable (Root Required)</div>
+                    The Browser History database could not be acquired. The device is not rooted,
+                    or ADB does not have sufficient permissions to read the database.
+                </div>
+            </div>
+            {% else %}
+            <p>No browser history found on device.</p>
+            {% endif %}
+        </section>
+
+        <section class="section-card">
             <h2>Installed Applications</h2>
             {% if evidence.installed_apps %}
             <table>

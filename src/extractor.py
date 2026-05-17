@@ -151,7 +151,7 @@ class DataExtractor:
             remote_path: str = "/sdcard/",
             filename: str = "storage_metadata.json") -> Path:
         """Extracts and saves storage metadata."""
-        output_path = self.output_dir / filename
+        output_path = self.output_dir / "media_metadata" / filename
         try:
             logger.log_info(f"Scanning storage at {remote_path} (optimized)...")
             raw_listing, hash_map = self._get_storage_lists(remote_path)
@@ -180,9 +180,40 @@ class DataExtractor:
         except Exception:
             return "HashError"
 
+    def _discover_browser_history_path(self) -> Optional[str]:
+        """
+        Dynamically discovers the Chrome History DB path using adb shell find.
+        Falls back to this if the default path is inaccessible.
+        """
+        try:
+            output = self.device.adb.shell("find /data -name History 2>/dev/null").strip()
+            for line in output.splitlines():
+                if "com.android.chrome" in line:
+                    return line.strip()
+        except Exception as e:
+            logger.log_error(f"Dynamic Chrome History discovery error: {e}")
+        return None
+
+    def _discover_calllog_db_path(self) -> Optional[str]:
+        """
+        Dynamically discovers the calllog.db path using adb shell find.
+        Falls back to this if the default path is inaccessible.
+        """
+        try:
+            output = self.device.adb.shell("find /data -name calllog.db 2>/dev/null").strip()
+            for line in output.splitlines():
+                if "com.android.providers.contacts" in line:
+                    return line.strip()
+        except Exception as e:
+            logger.log_error(f"Dynamic calllog.db discovery error: {e}")
+        return None
+
     def _acquire_physical_db(self, remote_path: str, local_db_path: Path) -> bool:
         """Pulls physical DB file."""
-        self.device.adb.pull(remote_path, str(local_db_path))
+        try:
+            self.device.adb.pull(remote_path, str(local_db_path))
+        except Exception:
+            pass
         return local_db_path.exists() and local_db_path.stat().st_size > 0
 
     def _parse_and_save_call_logs(self, local_db_path: Path, json_output_path: Path) -> Path:
@@ -204,24 +235,28 @@ class DataExtractor:
 
     def extract_call_logs(
             self,
-            remote_path: str = "/data/data/com.android.providers.contacts/databases/contacts2.db") -> Optional[Path]:
+            remote_path: str = "/data/user/0/com.android.providers.contacts/databases/calllog.db") -> Optional[Path]:
         """Orchestrates call log extraction with logical fallback."""
-        local_db_path = self.output_dir / "call_log" / "contacts2.db"
+        local_db_path = self.output_dir / "call_log" / "calllog.db"
         json_output_path = self.output_dir / "call_log" / "call_logs.json"
 
         try:
             logger.log_info(f"Attempting to acquire call log database from {remote_path}...")
             if not self._acquire_physical_db(remote_path, local_db_path):
-                logger.log_warning("Acquisition failed or DB is 0 bytes. Falling back to logical content provider.")
-                return self._extract_calls_via_content_provider(json_output_path)
+                discovered = self._discover_calllog_db_path()
+                if discovered and discovered != remote_path:
+                    logger.log_info(f"Call log DB discovered dynamically:\n{discovered}")
+                    if not self._acquire_physical_db(discovered, local_db_path):
+                        return self._extract_calls_via_content_provider(json_output_path)
+                else:
+                    return self._extract_calls_via_content_provider(json_output_path)
+            else:
+                logger.log_info(f"Default path success for calllog.db: {remote_path}")
 
             return self._parse_and_save_call_logs(local_db_path, json_output_path)
         except Exception as e:
-            if "Permission denied" in str(e) or "does not exist" in str(e).lower():
-                logger.log_warning(f"Could not access {remote_path}. Falling back.")
-                return self._extract_calls_via_content_provider(json_output_path)
-            logger.log_error(f"Unexpected error during call log extraction: {e}")
-            return None
+            logger.log_warning(f"Error during call log extraction: {e}. Falling back.")
+            return self._extract_calls_via_content_provider(json_output_path)
 
     def _parse_provider_call(self, line: str) -> dict:
         """Parses a single call log row from content provider."""
@@ -288,8 +323,8 @@ class DataExtractor:
                                "databases/mmssms.db"
     ) -> Optional[Path]:
         """Orchestrates SMS extraction with logical fallback."""
-        local_db_path = self.output_dir / "mmssms.db"
-        json_output_path = self.output_dir / "sms_messages.json"
+        local_db_path = self.output_dir / "sms" / "mmssms.db"
+        json_output_path = self.output_dir / "sms" / "sms_messages.json"
 
         try:
             logger.log_info(f"Attempting to acquire SMS database from {remote_path}...")
@@ -358,26 +393,40 @@ class DataExtractor:
 
     def extract_browser_history(
             self,
-            remote_path: str = "/data/data/com.android.chrome/app_chrome/Default/History"
+            remote_path: str = "/data/user/0/com.android.chrome/app_chrome/Default/History"
     ) -> Optional[Path]:
         """Extracts the Chrome history database."""
-        local_db_path = self.output_dir / "Chrome_History"
-        json_output_path = self.output_dir / "browser_history.json"
+        local_db_path = self.output_dir / "browser_history" / "Chrome_History"
+        json_output_path = self.output_dir / "browser_history" / "browser_history.json"
 
         try:
             logger.log_info(f"Attempting to acquire Chrome history from {remote_path}...")
-            self.device.adb.pull(remote_path, str(local_db_path))
+            discovered = None
+            try:
+                self.device.adb.pull(remote_path, str(local_db_path))
+            except Exception:
+                pass
 
-            if not local_db_path.exists():
+            if not local_db_path.exists() or local_db_path.stat().st_size == 0:
+                discovered = self._discover_browser_history_path()
+                if discovered and discovered != remote_path:
+                    logger.log_info(f"Browser history DB discovered dynamically:\n{discovered}")
+                    try:
+                        self.device.adb.pull(discovered, str(local_db_path))
+                    except Exception:
+                        pass
+                
+            if not local_db_path.exists() or local_db_path.stat().st_size == 0:
                 logger.log_error("Acquisition failed: Chrome history file was not downloaded.")
                 return None
+            else:
+                if not discovered:
+                    logger.log_info(f"Default path success for browser history: {remote_path}")
 
             return self._parse_and_save_browser(local_db_path, json_output_path)
         except Exception as e:
-            if "Permission denied" in str(e) or "does not exist" in str(e).lower():
-                logger.log_warning(f"Could not access {remote_path}. Chrome history usually requires root access.")
-            else:
-                logger.log_error(f"Unexpected error during browser history extraction: {e}")
+            logger.log_error(f"Unexpected error during browser history extraction: {e}")
+            return None
 
     def extract_whatsapp(
             self,
