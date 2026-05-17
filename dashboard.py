@@ -47,26 +47,74 @@ def index():
     return render_template("dashboard.html")
 
 
+def _get_battery_level(shell):
+    try:
+        for line in shell("dumpsys battery", "").splitlines():
+            if "level:" in line.lower():
+                return "".join(filter(str.isdigit, line.split(":")[1]))
+    except Exception:
+        pass
+    return "N/A"
+
+def _get_storage_info(shell):
+    try:
+        parts = shell("df /data 2>/dev/null | tail -1", "").split()
+        if len(parts) >= 4:
+            total_kb, used_kb, free_kb = int(parts[1]), int(parts[2]), int(parts[3])
+            return {
+                "total_gb": round(total_kb / 1024 / 1024, 2),
+                "used_gb":  round(used_kb  / 1024 / 1024, 2),
+                "free_gb":  round(free_kb  / 1024 / 1024, 2),
+                "used_pct": round(used_kb / total_kb * 100, 1) if total_kb else 0
+            }
+    except Exception:
+        pass
+    return {}
+
+def _get_extra_device_info(shell, meta, drift_ms):
+    uptime_raw = shell("cat /proc/uptime")
+    uptime_secs = int(float(uptime_raw.split()[0])) if uptime_raw != "N/A" else 0
+    uptime_str = f"{uptime_secs // 3600}h {(uptime_secs % 3600) // 60}m"
+    ip_addr = shell("ip route get 1.1.1.1 2>/dev/null | grep -oP 'src \\K\\S+'")
+    if not ip_addr or ip_addr == "N/A":
+        ip_addr = shell("ip addr show wlan0 2>/dev/null | grep -oP '(?<=inet )\\S+' | cut -d/ -f1")
+    app_count_raw = shell("pm list packages | wc -l")
+    try:
+        app_count = int(app_count_raw)
+    except Exception:
+        app_count = "N/A"
+
+    return {
+        "serial":           meta.get("serial_number", "N/A"),
+        "model":            meta.get("model", "N/A"),
+        "manufacturer":     meta.get("manufacturer", "N/A"),
+        "brand":            shell("getprop ro.product.brand"),
+        "device_name":      shell("getprop ro.product.device"),
+        "android_version":  meta.get("android_version", "N/A"),
+        "sdk_version":      shell("getprop ro.build.version.sdk"),
+        "security_patch":   shell("getprop ro.build.version.security_patch"),
+        "cpu_abi":          shell("getprop ro.product.cpu.abi"),
+        "kernel":           shell("uname -r"),
+        "device_time":      meta.get("device_time", "N/A"),
+        "battery":          _get_battery_level(shell),
+        "clock_drift_ms":   round(drift_ms, 3) if drift_ms is not None else None,
+        "ip_address":       ip_addr,
+        "build_fingerprint":shell("getprop ro.build.fingerprint"),
+        "storage":          _get_storage_info(shell),
+        "app_count":        app_count,
+        "uptime":           uptime_str,
+    }
+
 @app.route("/api/scan", methods=["POST"])
 def scan_device():
-    """
-    Scan for a connected USB Android device.
-    Uses a SHORT 5-second timeout so it fails quickly when no phone is plugged in.
-    Returns rich device metadata on success, or a clear error on failure.
-    """
+    """Scan for a connected USB Android device."""
     try:
         manager = AndroidDeviceManager()
-        # 5-second timeout: fail fast when no device is connected
         device = manager.connect_device(auth_timeout_s=5)
         if not device:
             return jsonify({
                 "success": False,
-                "error": (
-                    "No device detected. Make sure your Redmi is:\n"
-                    "1. Connected via USB data cable\n"
-                    "2. USB Debugging is ON (Developer Options)\n"
-                    "3. Screen is unlocked and you tapped 'Allow' on the popup"
-                )
+                "error": "No device detected. Plug in phone and enable USB Debugging."
             })
 
         meta = device.fetch_metadata()
@@ -78,79 +126,12 @@ def scan_device():
             except Exception:
                 return default
 
-        # Battery
-        battery_level = "N/A"
-        try:
-            for line in shell("dumpsys battery", "").splitlines():
-                if "level:" in line.lower():
-                    battery_level = "".join(filter(str.isdigit, line.split(":")[1]))
-                    break
-        except Exception:
-            pass
-
-        # Storage
-        storage_info = {}
-        try:
-            parts = shell("df /data 2>/dev/null | tail -1", "").split()
-            if len(parts) >= 4:
-                total_kb, used_kb, free_kb = int(parts[1]), int(parts[2]), int(parts[3])
-                storage_info = {
-                    "total_gb": round(total_kb / 1024 / 1024, 2),
-                    "used_gb":  round(used_kb  / 1024 / 1024, 2),
-                    "free_gb":  round(free_kb  / 1024 / 1024, 2),
-                    "used_pct": round(used_kb / total_kb * 100, 1) if total_kb else 0
-                }
-        except Exception:
-            pass
-
-        # Extra device properties
-        brand        = shell("getprop ro.product.brand")
-        device_name  = shell("getprop ro.product.device")
-        cpu_abi      = shell("getprop ro.product.cpu.abi")
-        sdk_version  = shell("getprop ro.build.version.sdk")
-        security_patch = shell("getprop ro.build.version.security_patch")
-        build_fp     = shell("getprop ro.build.fingerprint")
-        kernel       = shell("uname -r")
-        uptime_raw   = shell("cat /proc/uptime")
-        uptime_secs  = int(float(uptime_raw.split()[0])) if uptime_raw != "N/A" else 0
-        uptime_str   = f"{uptime_secs // 3600}h {(uptime_secs % 3600) // 60}m"
-
-        # IP address
-        ip_addr = shell("ip route get 1.1.1.1 2>/dev/null | grep -oP 'src \\K\\S+'")
-        if not ip_addr or ip_addr == "N/A":
-            ip_addr = shell("ip addr show wlan0 2>/dev/null | grep -oP '(?<=inet )\\S+' | cut -d/ -f1")
-
-        # App count
-        app_count_raw = shell("pm list packages | wc -l")
-        try:
-            app_count = int(app_count_raw)
-        except Exception:
-            app_count = "N/A"
-
+        device_info = _get_extra_device_info(shell, meta, drift_ms)
         device.adb.close()
 
         return jsonify({
             "success": True,
-            "device": {
-                "serial":           meta.get("serial_number", "N/A"),
-                "model":            meta.get("model", "N/A"),
-                "manufacturer":     meta.get("manufacturer", "N/A"),
-                "brand":            brand,
-                "device_name":      device_name,
-                "android_version":  meta.get("android_version", "N/A"),
-                "sdk_version":      sdk_version,
-                "security_patch":   security_patch,
-                "cpu_abi":          cpu_abi,
-                "kernel":           kernel,
-                "device_time":      meta.get("device_time", "N/A"),
-                "battery":          battery_level,
-                "clock_drift_ms":   round(drift_ms, 3) if drift_ms is not None else None,
-                "ip_address":       ip_addr,
-                "build_fingerprint":build_fp,
-                "storage":          storage_info,
-                "app_count":        app_count,
-                "uptime":           uptime_str,
-            }
+            "device": device_info
         })
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
@@ -177,31 +158,26 @@ def start_acquisition():
         "timeline": [],
     }
 
+
     def run_acquisition():
         sess = _sessions[session_id]
         timeline = sess["timeline"]
-
         def add_event(msg: str, level: str = "info"):
             ts = _now_ms()
             entry = {"timestamp": ts, "message": msg, "level": level}
             timeline.append(entry)
             _emit(q, "timeline", entry)
 
-        try:
-            # ── Step 1: Connect ───────────────────────────────────────────
+        def step1_connect():
             _emit(q, "progress", {"step": 1, "label": "Connecting to device..."})
             manager = AndroidDeviceManager()
             device  = manager.connect_device(auth_timeout_s=30)
-
             if not device:
                 _emit(q, "error", {"message": "No device found. Plug in phone and ensure USB Debugging is ON."})
                 sess["status"] = "error"
-                return
-
+                return None, None
             meta = device.fetch_metadata()
             drift_ms = device.calculate_clock_drift()
-
-            # battery
             try:
                 battery_raw = device.adb.shell("dumpsys battery")
                 battery_level = "N/A"
@@ -213,7 +189,6 @@ def start_acquisition():
                             break
             except Exception:
                 battery_level = "N/A"
-
             device_info = {
                 **meta,
                 "battery": battery_level,
@@ -223,21 +198,17 @@ def start_acquisition():
             _emit(q, "device_info", device_info)
             add_event(f"Connected to {meta.get('model')} [{meta.get('serial_number')}]")
             add_event(f"Clock drift: {drift_ms:+.3f}ms" if drift_ms is not None else "Clock drift: N/A")
+            return device, meta
 
-            # ── Step 2: Evidence structure ────────────────────────────────
+        def step2_extract_apps(device):
             _emit(q, "progress", {"step": 2, "label": "Creating evidence structure..."})
             paths = EvidenceManager.create_structure(output_dir, device.serial)
             _logger.set_log_file(paths.log_file)
             add_event(f"Evidence folder: {paths.root}")
-
             extractor = DataExtractor(device, paths.artefacts)
-
-            # ── Step 3a: Installed Apps ───────────────────────────────────
             _emit(q, "progress", {"step": 3, "label": "Extracting installed apps..."})
             add_event("Extracting installed applications...")
-            extractor.extract_apps_to_json(
-                paths.sub_artefacts["installed_apps"] / "apps.json"
-            )
+            extractor.extract_apps_to_json(paths.sub_artefacts["installed_apps"] / "apps.json")
             apps_path = paths.sub_artefacts["installed_apps"] / "apps.json"
             apps = []
             if apps_path.exists():
@@ -246,8 +217,9 @@ def start_acquisition():
             sess["results"]["installed_apps"] = apps
             _emit(q, "installed_apps", {"count": len(apps), "apps": apps[:200]})
             add_event(f"Found {len(apps)} installed applications")
+            return extractor, paths, apps
 
-            # ── Step 3b: Call Logs ────────────────────────────────────────
+        def step3_extract_comms(extractor, paths):
             _emit(q, "progress", {"step": 4, "label": "Extracting call logs..."})
             add_event("Extracting call log database...")
             extractor.extract_call_logs()
@@ -266,7 +238,6 @@ def start_acquisition():
             _emit(q, "call_logs", {"root_required": call_root_required, "count": len(calls), "calls": calls})
             add_event(f"Call logs: {len(calls)} records extracted" if not call_root_required else "Call logs: Root Required")
 
-            # ── Step 3c: SMS ──────────────────────────────────────────────
             _emit(q, "progress", {"step": 5, "label": "Extracting SMS messages..."})
             add_event("Extracting SMS database...")
             extractor.extract_sms()
@@ -284,8 +255,9 @@ def start_acquisition():
             sess["results"]["sms_root_required"] = sms_root_required
             _emit(q, "sms_messages", {"root_required": sms_root_required, "count": len(sms_msgs), "messages": sms_msgs})
             add_event(f"SMS: {len(sms_msgs)} messages extracted" if not sms_root_required else "SMS: Root Required")
+            return calls, sms_msgs
 
-            # ── Step 3d: Browser History ──────────────────────────────────
+        def step4_extract_browser_storage(extractor, paths):
             _emit(q, "progress", {"step": 6, "label": "Extracting browser history..."})
             add_event("Extracting Chrome browser history...")
             extractor.extract_browser_history()
@@ -304,7 +276,6 @@ def start_acquisition():
             _emit(q, "browser_history", {"root_required": brow_root_required, "count": len(history), "history": history})
             add_event(f"Browser history: {len(history)} URLs extracted" if not brow_root_required else "Browser history: Root Required")
 
-            # ── Step 3e: Storage Metadata ─────────────────────────────────
             _emit(q, "progress", {"step": 7, "label": "Mapping external storage..."})
             add_event("Scanning /sdcard/ storage metadata...")
             extractor.extract_storage_metadata(filename="storage_manifest.json")
@@ -316,8 +287,9 @@ def start_acquisition():
             sess["results"]["storage_files"] = storage_files
             _emit(q, "storage_files", {"count": len(storage_files), "files": storage_files[:500]})
             add_event(f"Storage map: {len(storage_files)} files indexed")
+            return history
 
-            # ── Step 4: Integrity ─────────────────────────────────────────
+        def step5_integrity_report(paths, meta, apps, calls, sms_msgs):
             _emit(q, "progress", {"step": 8, "label": "Computing integrity hashes..."})
             add_event("Computing SHA-256 integrity hashes...")
             hasher = ForensicHasher()
@@ -328,7 +300,6 @@ def start_acquisition():
             _emit(q, "integrity", {"hashes": integrity_list})
             add_event(f"Integrity manifest complete: {len(integrity_list)} files hashed")
 
-            # ── Step 5: HTML Report ───────────────────────────────────────
             _emit(q, "progress", {"step": 9, "label": "Generating forensic report..."})
             add_event("Generating HTML forensic report...")
             reporter  = ForensicReporter(template_dir=Path("./templates"))
@@ -348,75 +319,72 @@ def start_acquisition():
                 paths.report_html, case_data, evidence_summary,
                 integrity_list, timeline, artefacts_dir=paths.artefacts
             )
-            reporter.generate_json_report(paths.report_json, case_data, evidence_summary)
-            add_event("Report generated successfully")
+            add_event(f"HTML report saved to {paths.report_html.name}")
 
-            # Verify final integrity
-            log_hash = hasher.hash_file(paths.log_file)
-            (paths.integrity / "acquisition_hash.txt").write_text(
-                f"SHA-256 of acquisition.log: {log_hash}\n"
-            )
+        try:
+            device, meta = step1_connect()
+            if not device: return
+            extractor, paths, apps = step2_extract_apps(device)
+            calls, sms_msgs = step3_extract_comms(extractor, paths)
+            step4_extract_browser_storage(extractor, paths)
+            step5_integrity_report(paths, meta, apps, calls, sms_msgs)
 
-            sess["results"]["report_path"] = str(paths.report_html)
-            sess["results"]["case_data"]   = case_data
-
-            device.adb.close()
-
-            _emit(q, "progress", {"step": 10, "label": "Complete!"})
-            _emit(q, "complete", {
-                "report_path": str(paths.report_html),
-                "evidence_root": str(paths.root),
-                "timeline": timeline,
-                "all_results": sess["results"],
-            })
-            add_event("Acquisition completed successfully ✓", "success")
-            sess["status"] = "done"
+            _emit(q, "progress", {"step": 10, "label": "Acquisition Complete"})
+            sess["status"] = "complete"
+            sess["results"]["report_url"] = f"/report/{session_id}"
+            _emit(q, "complete", {"report_url": sess["results"]["report_url"]})
+            add_event("Acquisition process completed successfully.")
 
         except Exception as e:
-            tb = traceback.format_exc()
-            _emit(q, "error", {"message": str(e), "traceback": tb})
+            _emit(q, "error", {"message": f"Acquisition failed: {str(e)}"})
             sess["status"] = "error"
-        finally:
-            q.put(None)  # sentinel to close SSE stream
+            add_event(f"Critical error: {str(e)}", "error")
+    threading.Thread(
+        target=run_acquisition,
+        daemon=True
+    ).start()
 
-    t = threading.Thread(target=run_acquisition, daemon=True)
-    t.start()
-
-    return jsonify({"session_id": session_id})
-
-
+    return jsonify({
+        "success": True,
+        "session_id": session_id,
+        "message": "Acquisition started successfully"
+    })
 @app.route("/api/stream/<session_id>")
-def stream(session_id: str):
-    """Server-Sent Events stream for live acquisition progress."""
+def stream(session_id):
+    """
+    Server-Sent Events stream for live acquisition updates.
+    """
+
     if session_id not in _sessions:
-        return Response("data: {\"error\": \"unknown session\"}\n\n",
-                        mimetype="text/event-stream")
+        return jsonify({
+            "success": False,
+            "error": "Invalid session ID"
+        }), 404
 
     q = _sessions[session_id]["queue"]
 
-    def generate():
+    def event_stream():
         while True:
-            item = q.get()
-            if item is None:
+            try:
+                item = q.get(timeout=1)
+
+                yield (
+                    f"event: {item['event']}\n"
+                    f"data: {json.dumps(item['data'])}\n\n"
+                )
+
+                if item["event"] == "complete":
+                    break
+
+            except queue.Empty:
+                continue
+
+            except GeneratorExit:
                 break
-            event = item["event"]
-            data  = json.dumps(item["data"])
-            yield f"event: {event}\ndata: {data}\n\n"
 
-    return Response(generate(), mimetype="text/event-stream",
-                    headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
-
-
-@app.route("/api/results/<session_id>")
-def get_results(session_id: str):
-    if session_id not in _sessions:
-        return jsonify({"error": "unknown session"}), 404
-    return jsonify(_sessions[session_id]["results"])
-
-
+    return Response(
+        event_stream(),
+        mimetype="text/event-stream"
+    )            
 if __name__ == "__main__":
-    print("\n" + "="*55)
-    print("  NFSU Forensic Acquisition Dashboard")
-    print("  Open your browser -> http://localhost:5000")
-    print("="*55 + "\n")
-    app.run(host="0.0.0.0", port=5000, debug=False, threaded=True)
+    app.run(host="127.0.0.1", port=5000, debug=True)
