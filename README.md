@@ -357,3 +357,32 @@ The required NFSU submission tag has been appended to the final commit sequence.
 git tag -a v1.0 -m "Final submission — NFSU DFIR"
 git push origin v1.0
 ```
+
+
+## Android Emulator Support & Forensic Testing
+
+The Antigravity Forensic Tool fully supports testing against Android Virtual Devices (AVDs). This allows for deep forensic validation without needing physical hardware.
+
+### Recommended Emulator Setup
+For complete physical extraction testing (including Call Logs and SMS which are protected), we strictly recommend the **Google APIs** emulator image over the Google Play image.
+* **Google Play images**: Block `adb root` entirely, mimicking production devices. Only logical acquisition works.
+* **Google APIs images**: Allow root escalation via ADB, permitting physical SQLite database extraction.
+
+### Emulator Setup & Root Usage
+To properly test physical acquisition, start your Google APIs emulator and run:
+```bash
+adb root
+adb shell whoami
+```
+*(Expected output: `root`)*
+
+### Generating Test Artefacts
+You can dynamically populate your emulator with forensic artefacts:
+1. **Call Logs**: Open the dialer app and dial several numbers (e.g., `123456`).
+2. **SMS Messages**: Use the emulator control panel (or `adb emu sms send <number> <message>`) to inject SMS records.
+3. **Browser History**: Open Chrome and navigate to multiple websites to populate `Chrome_History`.
+4. **Media (EXIF)**: Push sample JPG/PNG images with EXIF data to `/sdcard/Pictures/`.
+
+### Advantages & Limitations
+* **Advantages**: Repeatable, offline forensic environments. Safe generation of mock evidence.
+* **Rooted AVD Limitations**: Some production apps (like WhatsApp) detect root/emulators and may refuse to populate realistic keys or databases. Emulated SD cards (`/sdcard/`) might not behave identically to physical FBE/FDE encrypted partitions.

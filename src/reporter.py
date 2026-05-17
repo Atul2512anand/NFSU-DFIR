@@ -80,6 +80,8 @@ class ForensicReporter:
                 "method": visit.get("acquisition_method", "physical_sqlite")
             })
         events.sort(key=lambda x: x["timestamp"])
+        logger.log_info(f"Timeline generation: {len(events)} events aggregated")
+        evidence["timeline"] = events
         return events
 
     def generate_html_report(self,
@@ -124,6 +126,9 @@ class ForensicReporter:
                              evidence: Dict[str, List[Dict[str, Any]]]
                              ) -> Path:
         """Exports the acquisition metadata and evidence records to JSON."""
+        if "timeline" not in evidence or not evidence["timeline"]:
+            self._build_timeline(evidence)
+
         report_data = {
             "metadata": case_info,
             "report_generated_at": datetime.now(timezone.utc).isoformat(),

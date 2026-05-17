@@ -142,8 +142,14 @@ def _extract_browser_whatsapp_media(extractor, paths, timeline, add_event, args)
     if not args.no_media:
         add_event("Mapping external storage metadata...")
         extractor.extract_storage_metadata(filename="storage_manifest.json")
+        add_event("Extracting EXIF metadata from images...")
+        extractor.extract_exif_gps()
     else:
         add_event("Skipping media metadata extraction based on CLI flag.")
+
+    add_event("Inspecting SQLite freelist pages for deleted records...")
+    extractor.extract_deleted_records_stats()
+
     return whatsapp_path
 
 
@@ -184,8 +190,12 @@ def _load_evidence_summary(paths, whatsapp_accessible: bool):
     evidence_summary = {
         "call_logs": [],
         "sms_messages": [],
-        "installed_apps": [],
         "browser_history": [],
+        "installed_apps": [],
+        "storage_files": [],
+        "timeline": [],
+        "exif_locations": [],
+        "deleted_record_analysis": {},
         "whatsapp_accessible": whatsapp_accessible
     }
     call_log_path = paths.sub_artefacts["call_log"] / "call_logs.json"
@@ -207,6 +217,22 @@ def _load_evidence_summary(paths, whatsapp_accessible: bool):
     if browser_path.exists():
         with open(browser_path, "r") as f:
             evidence_summary["browser_history"] = json.load(f)
+
+    storage_path = paths.sub_artefacts["media_metadata"] / "storage_manifest.json"
+    if storage_path.exists():
+        with open(storage_path, "r") as f:
+            evidence_summary["storage_files"] = json.load(f)
+
+    exif_path = paths.sub_artefacts["media_metadata"] / "exif_locations.json"
+    if exif_path.exists():
+        with open(exif_path, "r", encoding="utf-8") as f:
+            evidence_summary["exif_locations"] = json.load(f)
+
+    deleted_path = paths.artefacts / "deleted_record_analysis.json"
+    if deleted_path.exists():
+        with open(deleted_path, "r", encoding="utf-8") as f:
+            evidence_summary["deleted_record_analysis"] = json.load(f)
+
     return evidence_summary
 
 

@@ -22,6 +22,21 @@ class SQLiteForensicParser:
 
         self.db_path = db_path
 
+    def get_freelist_count(self) -> int:
+        """Inspects SQLite freelist pages to detect deleted/free pages."""
+        if not self.db_path.exists():
+            return 0
+        try:
+            conn = sqlite3.connect(f"file:{self.db_path}?mode=ro", uri=True)
+            cursor = conn.cursor()
+            cursor.execute("PRAGMA freelist_count;")
+            count = cursor.fetchone()[0]
+            conn.close()
+            return count
+        except sqlite3.Error as e:
+            logger.log_error(f"SQLite error getting freelist {self.db_path.name}: {e}")
+            return 0
+
     def _query_db(self, query: str) -> List[Dict[str, Any]]:
         """Executes a query and returns results as a list of dictionaries."""
         results = []

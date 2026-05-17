@@ -238,9 +238,9 @@
                 <div class="info-group">
                     <span class="info-label">Inaccessible Artefacts</span>
                     <span class="info-value">
-                        {% if not evidence.whatsapp_accessible %}<span class="badge badge-danger">WhatsApp</span>{% endif %}
-                        {% if evidence.call_logs_root_required %}<span class="badge badge-danger">Call Logs (Physical)</span>{% endif %}
-                        {% if evidence.sms_root_required %}<span class="badge badge-danger">SMS (Physical)</span>{% endif %}
+                        {% if not evidence.get('whatsapp_accessible', True) %}<span class="badge badge-danger">WhatsApp</span>{% endif %}
+                        {% if evidence.get('call_logs_root_required') %}<span class="badge badge-danger">Call Logs (Physical)</span>{% endif %}
+                        {% if evidence.get('sms_root_required') %}<span class="badge badge-danger">SMS (Physical)</span>{% endif %}
                     </span>
                 </div>
             </div>
@@ -273,7 +273,7 @@
 
         <section class="section-card">
             <h2>Call Log Records</h2>
-            {% if evidence.call_logs %}
+            {% if evidence.get('call_logs') %}
             <table>
                 <thead>
                     <tr>
@@ -285,7 +285,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for call in evidence.call_logs[:50] %}
+                    {% for call in evidence.get('call_logs', [])[:50] %}
                     <tr>
                         <td>{{ call.number }}</td>
                         <td>{{ call.name or '---' }}</td>
@@ -296,7 +296,7 @@
                     {% endfor %}
                 </tbody>
             </table>
-            {% elif evidence.call_logs_root_required is defined and evidence.call_logs_root_required %}
+            {% elif evidence.get('call_logs_root_required') %}
             <div class="root-required-banner">
                 <span class="icon">⚠️</span>
                 <div>
@@ -311,7 +311,7 @@
 
         <section class="section-card">
             <h2>SMS Messages</h2>
-            {% if evidence.sms_messages %}
+            {% if evidence.get('sms_messages') %}
             <table>
                 <thead>
                     <tr>
@@ -322,7 +322,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for msg in evidence.sms_messages[:50] %}
+                    {% for msg in evidence.get('sms_messages', [])[:50] %}
                     <tr>
                         <td style="white-space: nowrap;"><strong>{{ msg.address }}</strong></td>
                         <td>{{ msg.body }}</td>
@@ -332,7 +332,7 @@
                     {% endfor %}
                 </tbody>
             </table>
-            {% elif evidence.sms_root_required is defined and evidence.sms_root_required %}
+            {% elif evidence.get('sms_root_required') %}
             <div class="root-required-banner">
                 <span class="icon">⚠️</span>
                 <div>
@@ -350,7 +350,7 @@
 
         <section class="section-card">
             <h2>Browser Database Acquisition</h2>
-            {% if evidence.browser_history %}
+            {% if evidence.get('browser_history') %}
             <table>
                 <thead>
                     <tr>
@@ -361,7 +361,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for visit in evidence.browser_history[:50] %}
+                    {% for visit in evidence.get('browser_history', [])[:50] %}
                     <tr>
                         <td style="word-break: break-all;"><a href="{{ visit.url }}" target="_blank" style="color: var(--accent-color); text-decoration: none;">{{ visit.url[:60] }}{% if visit.url|length > 60 %}...{% endif %}</a></td>
                         <td>{{ visit.title }}</td>
@@ -371,8 +371,8 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <p style="margin-top: 15px; font-weight: bold;">Total extracted URLs: {{ evidence.browser_history | length }}</p>
-            {% elif evidence.browser_root_required is defined and evidence.browser_root_required %}
+            <p style="margin-top: 15px; font-weight: bold;">Total extracted URLs: {{ evidence.get('browser_history', []) | length }}</p>
+            {% elif evidence.get('browser_root_required') %}
             <div class="root-required-banner">
                 <span class="icon">⚠️</span>
                 <div>
@@ -388,7 +388,7 @@
 
         <section class="section-card">
             <h2>Installed Applications</h2>
-            {% if evidence.installed_apps %}
+            {% if evidence.get('installed_apps') %}
             <table>
                 <thead>
                     <tr>
@@ -398,7 +398,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for app in evidence.installed_apps %}
+                    {% for app in evidence.get('installed_apps', []) %}
                     <tr>
                         <td>{{ app.package_name }}</td>
                         <td><span class="tag">{{ app.version }}</span></td>
@@ -414,7 +414,7 @@
 
         <section class="section-card">
             <h2>WhatsApp Artefacts</h2>
-            {% if evidence.whatsapp_accessible %}
+            {% if evidence.get('whatsapp_accessible', False) %}
             <p>WhatsApp database extracted successfully.</p>
             {% else %}
             <div class="root-required-banner">
@@ -424,6 +424,71 @@
                     WhatsApp databases inaccessible on non-rooted production emulator.
                 </div>
             </div>
+            {% endif %}
+        </section>
+
+        <section class="section-card">
+            <h2>EXIF GPS Evidence</h2>
+            {% if evidence.get('exif_locations') %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Filename</th>
+                        <th>Path</th>
+                        <th>Coordinates</th>
+                        <th>Timestamp</th>
+                        <th>Camera</th>
+                        <th>Map</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exif in evidence.get('exif_locations', []) %}
+                    <tr>
+                        <td><strong>{{ exif.get('filename', 'Unknown') }}</strong></td>
+                        <td style="word-break: break-all; font-size: 0.85em;">{{ exif.get('path', '') }}</td>
+                        <td>{{ exif.get('latitude', 0) | round(6) }}, {{ exif.get('longitude', 0) | round(6) }}</td>
+                        <td>{{ exif.get('timestamp', 'N/A') }}</td>
+                        <td>{{ exif.get('camera_make', '') }} {{ exif.get('camera_model', '') }}</td>
+                        <td><a href="{{ exif.get('map_link', '#') }}" target="_blank" style="color: var(--accent-color); text-decoration: none;">OpenStreetMap</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No valid EXIF GPS data found.</p>
+            {% endif %}
+        </section>
+
+        <section class="section-card">
+            <h2>Deleted Record Analysis</h2>
+            {% if evidence.get('deleted_record_analysis') %}
+            <p><strong>Experimental forensic recovery indicator</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Database</th>
+                        <th>Freelist Pages</th>
+                        <th>Potential Recovery</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for db_name, stat in evidence.get('deleted_record_analysis', {}).items() %}
+                    <tr>
+                        <td><strong>{{ db_name | upper }}</strong></td>
+                        <td><span class="tag">{{ stat.get('freelist_count', 0) }}</span></td>
+                        <td>
+                            {% if stat.get('recovery_possible') %}
+                            <span class="badge badge-warning">Potential deleted artefacts recoverable</span>
+                            {% else %}
+                            <span class="badge badge-success">No active freelist pages</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No deleted record analysis available.</p>
             {% endif %}
         </section>
 

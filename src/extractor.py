@@ -3,6 +3,7 @@ Module for forensic acquisition.
 """
 
 import json
+import exifread
 import re
 from pathlib import Path
 from typing import List, Dict, Any, Optional
@@ -111,6 +112,117 @@ class DataExtractor:
         except Exception as e:
             logger.log_error(f"Failed to save installed apps to JSON: {e}")
             return output_path
+
+    def extract_deleted_records_stats(self) -> Path:
+        """Analyzes SQLite databases for deleted records via freelist count."""
+        stats = {}
+        out_path = self.output_dir / "deleted_record_analysis.json"
+
+        call_db = self.output_dir / "call_log" / "calllog.db"
+        count_calls = 0
+        if call_db.exists() and call_db.stat().st_size > 0:
+            parser = CallLogParser(call_db)
+            count_calls = parser.get_freelist_count()
+        logger.log_info(f"SQLite freelist_count for calllog.db: {count_calls}")
+        stats["calls"] = {"freelist_count": count_calls, "recovery_possible": count_calls > 0}
+
+        sms_db = self.output_dir / "sms" / "mmssms.db"
+        count_sms = 0
+        if sms_db.exists() and sms_db.stat().st_size > 0:
+            parser = SMSParser(sms_db)
+            count_sms = parser.get_freelist_count()
+        logger.log_info(f"SQLite freelist_count for mmssms.db: {count_sms}")
+        stats["sms"] = {"freelist_count": count_sms, "recovery_possible": count_sms > 0}
+
+        try:
+            with open(out_path, "w", encoding="utf-8") as f:
+                json.dump(stats, f, indent=4)
+        except Exception as e:
+            logger.log_error(f"Failed to save deleted records stats: {e}")
+        return out_path
+
+    def _convert_to_degrees(self, value):
+        try:
+            d = float(value.values[0].num) / float(value.values[0].den)
+            m = float(value.values[1].num) / float(value.values[1].den)
+            s = float(value.values[2].num) / float(value.values[2].den)
+            return d + (m / 60.0) + (s / 3600.0)
+        except Exception:
+            return 0.0
+
+    def extract_exif_gps(self) -> Path:
+        """Extracts EXIF metadata from pulled images."""
+        results = []
+        out_path = self.output_dir / "media_metadata" / "exif_locations.json"
+        manifest_path = self.output_dir / "media_metadata" / "storage_manifest.json"
+
+        if not manifest_path.exists():
+            return out_path
+
+        try:
+            with open(manifest_path, "r", encoding="utf-8") as f:
+                files = json.load(f)
+        except Exception:
+            return out_path
+
+        img_exts = {".jpg", ".jpeg", ".png"}
+        images = [f for f in files if Path(f["filename"]).suffix.lower() in img_exts]
+
+        for img in images:
+            try:
+                logger.log_info(f"EXIF image scanned: {img['filename']}")
+                local_tmp = self.output_dir / "media_metadata" / f"tmp_{img['filename']}"
+                self.device.adb.pull(img["path"], str(local_tmp))
+
+                with open(local_tmp, "rb") as f:
+                    tags = exifread.process_file(f, details=False)
+
+                if "GPS GPSLatitude" in tags and "GPS GPSLongitude" in tags:
+                    lat = self._convert_to_degrees(tags["GPS GPSLatitude"])
+                    lat_ref = str(tags.get("GPS GPSLatitudeRef", "N"))
+                    if "S" in lat_ref:
+                        lat = -lat
+                    lon = self._convert_to_degrees(tags["GPS GPSLongitude"])
+                    lon_ref = str(tags.get("GPS GPSLongitudeRef", "E"))
+                    if "W" in lon_ref:
+                        lon = -lon
+
+                    if lat != 0.0 and lon != 0.0:
+                        logger.log_info(f"GPS found for {img['filename']}")
+                        record = {
+                            "filename": img["filename"],
+                            "path": img["path"],
+                            "latitude": lat,
+                            "longitude": lon,
+                            "map_link": f"https://www.openstreetmap.org/?mlat={lat}&mlon={lon}"
+                        }
+                        if "Image DateTime" in tags:
+                            record["timestamp"] = str(tags["Image DateTime"])
+                        if "Image Make" in tags:
+                            record["camera_make"] = str(tags["Image Make"])
+                        if "Image Model" in tags:
+                            record["camera_model"] = str(tags["Image Model"])
+                        results.append(record)
+                    else:
+                        logger.log_info(f"GPS not found or invalid for {img['filename']}")
+                else:
+                    logger.log_info(f"GPS not found for {img['filename']}")
+
+                # Cleanup
+                if local_tmp.exists():
+                    local_tmp.unlink()
+            except Exception as e:
+                logger.log_error(f"Error parsing EXIF for {img['filename']}: {e}")
+
+        logger.log_info(f"EXIF extraction: {len(results)} valid GPS tags found from {len(images)} images")
+
+        try:
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(out_path, "w", encoding="utf-8") as f:
+                json.dump(results, f, indent=4)
+        except Exception as e:
+            logger.log_error(f"Failed to save EXIF data: {e}")
+        return out_path
 
     def _get_storage_lists(self, remote_path: str) -> tuple[list, dict]:
         """Gets raw file listings and hashes."""
@@ -260,7 +372,8 @@ class DataExtractor:
 
     def _parse_provider_call(self, line: str) -> dict:
         """Parses a single call log row from content provider."""
-        call = {"number": "", "date": "", "duration": "", "type": "", "name": "", "acquisition_method": "logical_content_provider"}
+        call = {"number": "", "date": "", "duration": "", "type": "",
+                "name": "", "acquisition_method": "logical_content_provider"}
         number_match = re.search(r'number=(.*?), ', line)
         date_match = re.search(r'date=(.*?), ', line)
         duration_match = re.search(r'duration=(.*?), ', line)
@@ -342,7 +455,8 @@ class DataExtractor:
 
     def _parse_provider_sms(self, line: str) -> dict:
         """Parses a single SMS log row from content provider."""
-        msg = {"address": "", "date": "", "body": "", "type": "", "read": "", "acquisition_method": "logical_content_provider"}
+        msg = {"address": "", "date": "", "body": "", "type": "",
+               "read": "", "acquisition_method": "logical_content_provider"}
         address_match = re.search(r'address=(.*?), ', line)
         date_match = re.search(r'date=(.*?), ', line)
         type_match = re.search(r'type=(.*?), ', line)
