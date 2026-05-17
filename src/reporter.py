@@ -32,7 +32,7 @@ class ForensicReporter:
     """Generates comprehensive forensic reports in HTML and JSON formats."""
 
     def __init__(self, template_dir: Path):
-        """Function documentation."""
+        """Initializes the reporter with the Jinja2 template directory."""
         self.template_dir = template_dir
         self.env = Environment(loader=FileSystemLoader(str(template_dir)))
 

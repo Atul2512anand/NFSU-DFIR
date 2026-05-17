@@ -17,7 +17,7 @@ class AndroidDevice:
     """Represents a connected Android device and its metadata."""
 
     def __init__(self, adb_device: AdbDeviceTcp, serial: str):
-        """Function documentation."""
+        """Initializes the Android device representation."""
         self.adb = adb_device
         self.serial = serial
         self.metadata: Dict[str, str] = {}
@@ -69,7 +69,7 @@ class AndroidDeviceManager:
     """Manages connections and discovery for Android devices using adb-shell."""
 
     def __init__(self):
-        """Function documentation."""
+        """Initializes the device manager."""
         self.current_device: Optional[AndroidDevice] = None
 
     def _get_adb_keys(self) -> List[PythonRSASigner]:

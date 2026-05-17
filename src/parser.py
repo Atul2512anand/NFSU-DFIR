@@ -18,7 +18,7 @@ class SQLiteForensicParser:
     """
 
     def __init__(self, db_path: Path):
-        """Function documentation."""
+        """Initializes the parser with the path to the call log database."""
 
         self.db_path = db_path
 

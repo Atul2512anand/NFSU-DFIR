@@ -415,7 +415,7 @@ class DataExtractor:
                         self.device.adb.pull(discovered, str(local_db_path))
                     except Exception:
                         pass
-                
+
             if not local_db_path.exists() or local_db_path.stat().st_size == 0:
                 logger.log_error("Acquisition failed: Chrome history file was not downloaded.")
                 return None

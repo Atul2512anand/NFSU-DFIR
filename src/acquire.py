@@ -21,11 +21,14 @@ def setup_argparse() -> argparse.Namespace:
         description="Android Forensic Acquisition Tool - CLI.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
-    parser.add_argument("--case", required=True, help="Case identifier.")
-    parser.add_argument("--investigator", required=True, help="Investigator.")
-    parser.add_argument("--output", type=Path, default=Path("./output"), help="Output root.")
+    parser.add_argument("--case", required=True, help="Case reference number (e.g. DFIR-2024-0147)")
+    parser.add_argument("--investigator", required=True, help="Name of the acquiring investigator")
+    parser.add_argument("--output", type=Path, default=Path("./output"), help="Output directory root")
+    parser.add_argument("--platform", choices=["android", "ios"], default="android", help="Target platform")
+    parser.add_argument("--skip", nargs="*", choices=["whatsapp", "sms", "calls", "browser"], default=[], help="Artefacts to skip")
+    parser.add_argument("--no-media", action="store_true", help="Skip extract_storage_metadata()")
+    parser.add_argument("--dry-run", action="store_true", help="Validate only without acquiring evidence")
     parser.add_argument("--serial", help="Target device serial.")
-    parser.add_argument("--dry-run", action="store_true", help="Validate only.")
     parser.add_argument("--version", action="version", version="Antigravity Forensic Acquisition Tool v1.0")
     return parser.parse_args()
 
@@ -106,7 +109,45 @@ def _extract_sms(extractor, paths, timeline, add_event):
     _check_zero_byte(paths.sub_artefacts["sms"] / "mmssms.db", "SMS", timeline, add_event, fallback_occurred=fallback_sms)
 
 
-def _perform_extractions(device, paths, timeline, add_event) -> bool:
+def _extract_calls_sms(extractor, paths, timeline, add_event, args):
+    """Extracts call logs and SMS based on CLI flags."""
+    if "calls" not in args.skip:
+        _extract_call_logs(extractor, paths, timeline, add_event)
+    else:
+        add_event("Skipping call logs extraction based on CLI flag.")
+    if "sms" not in args.skip:
+        _extract_sms(extractor, paths, timeline, add_event)
+    else:
+        add_event("Skipping SMS extraction based on CLI flag.")
+
+
+def _extract_browser_whatsapp_media(extractor, paths, timeline, add_event, args):
+    """Extracts browser history, WhatsApp, and media metadata based on CLI flags."""
+    if "browser" not in args.skip:
+        add_event("Extracting Chrome history...")
+        extractor.extract_browser_history()
+        _check_zero_byte(paths.sub_artefacts["browser_history"] / "Chrome_History", "Browser History", timeline, add_event)
+    else:
+        add_event("Skipping browser history extraction based on CLI flag.")
+
+    whatsapp_path = None
+    if "whatsapp" not in args.skip:
+        add_event("Extracting WhatsApp databases...")
+        whatsapp_path = extractor.extract_whatsapp()
+        if not whatsapp_path:
+            add_event("WhatsApp databases inaccessible on non-rooted production emulator.")
+    else:
+        add_event("Skipping WhatsApp extraction based on CLI flag.")
+
+    if not args.no_media:
+        add_event("Mapping external storage metadata...")
+        extractor.extract_storage_metadata(filename="storage_manifest.json")
+    else:
+        add_event("Skipping media metadata extraction based on CLI flag.")
+    return whatsapp_path
+
+
+def _perform_extractions(device, paths, timeline, add_event, args) -> bool:
     """Performs all extraction logic."""
     print("[3/5] Performing Logical Extraction...")
     extractor = DataExtractor(device, paths.artefacts)
@@ -114,20 +155,8 @@ def _perform_extractions(device, paths, timeline, add_event) -> bool:
     add_event("Extracting installed applications...")
     extractor.extract_apps_to_json(paths.sub_artefacts["installed_apps"] / "apps.json")
 
-    _extract_call_logs(extractor, paths, timeline, add_event)
-    _extract_sms(extractor, paths, timeline, add_event)
-
-    add_event("Extracting Chrome history...")
-    extractor.extract_browser_history()
-    _check_zero_byte(paths.sub_artefacts["browser_history"] / "Chrome_History", "Browser History", timeline, add_event)
-
-    add_event("Extracting WhatsApp databases...")
-    whatsapp_path = extractor.extract_whatsapp()
-    if not whatsapp_path:
-        add_event("WhatsApp databases inaccessible on non-rooted production emulator.")
-
-    add_event("Mapping external storage metadata...")
-    extractor.extract_storage_metadata(filename="storage_manifest.json")
+    _extract_calls_sms(extractor, paths, timeline, add_event, args)
+    whatsapp_path = _extract_browser_whatsapp_media(extractor, paths, timeline, add_event, args)
     return bool(whatsapp_path)
 
 
@@ -178,7 +207,6 @@ def _load_evidence_summary(paths, whatsapp_accessible: bool):
     if browser_path.exists():
         with open(browser_path, "r") as f:
             evidence_summary["browser_history"] = json.load(f)
-            
     return evidence_summary
 
 
@@ -235,22 +263,27 @@ def _final_integrity_check(paths, integrity_manifest, add_event, duration_str, t
     print(f"Hashes: {(paths.integrity / 'acquisition_hash.txt').absolute()}")
 
 
-def main() -> None:
-    """Main orchestration for forensic acquisition."""
-    args = setup_argparse()
-    device = _init_device(args)
-    metadata = _confirm_acquisition(device, args)
+def _handle_dry_run(args, add_event):
+    """Handles the dry run logic and printing planned artefacts."""
+    add_event("DRY RUN mode activated. No evidence will be acquired.")
+    planned_artefacts = ["installed_apps"]
+    if "calls" not in args.skip:
+        planned_artefacts.append("call_logs")
+    if "sms" not in args.skip:
+        planned_artefacts.append("sms_messages")
+    if "browser" not in args.skip:
+        planned_artefacts.append("browser_history")
+    if "whatsapp" not in args.skip:
+        planned_artefacts.append("whatsapp")
+    if not args.no_media:
+        planned_artefacts.append("media_metadata")
+    print("\n--- Dry Run Planned Artefacts ---")
+    for artefact in planned_artefacts:
+        print(f"- {artefact}")
 
-    drift_ms = device.calculate_clock_drift()
-    if drift_ms is not None:
-        print(f"[*] Clock Drift: {drift_ms:+.3f}ms (logged to acquisition.log)")
-    if args.dry_run:
-        return print("\nDRY RUN complete. Device is reachable.")
 
-    print("\n[2/5] Creating Evidence Structure...")
-    paths = EvidenceManager.create_structure(args.output, device.serial)
-    logger = ForensicLogger()
-    logger.set_log_file(paths.log_file)
+def _setup_logging(paths, logger):
+    """Sets up logging and timeline."""
     timeline = []
 
     def add_event(msg: str):
@@ -259,15 +292,51 @@ def main() -> None:
         ts = now.strftime("%Y-%m-%dT%H:%M:%S.") + f"{now.microsecond // 1000:03d}Z"
         timeline.append({"timestamp": ts, "message": msg})
         logger.log_info(msg)
+    return timeline, add_event
 
-    start_time = datetime.now(timezone.utc)
+
+def _log_startup(add_event, args, metadata, start_time):
+    """Logs startup information."""
     add_event(f"Acquisition started for Case: {args.case}")
     add_event("Tool Startup: Antigravity Forensic Acquisition Tool v1.0")
-    add_event(f"CLI Arguments: case={args.case}, investigator={args.investigator}, serial={args.serial}, dry_run={args.dry_run}")
+    add_event(f"CLI Arguments: case={args.case}, investigator={args.investigator}, serial={args.serial}, dry_run={args.dry_run}, platform={args.platform}, skip={args.skip}, no_media={args.no_media}")
     add_event(f"Device Connection: Model={metadata.get('model')}, Serial={metadata.get('serial_number')}, Android Version={metadata.get('android_version')}")
     add_event(f"Investigator confirmation: Investigator {args.investigator} authorized acquisition.")
 
-    whatsapp_accessible = _perform_extractions(device, paths, timeline, add_event)
+
+def main() -> None:
+    """Main orchestration for forensic acquisition."""
+    args = setup_argparse()
+
+    if args.platform == "ios":
+        paths = EvidenceManager.create_structure(args.output, "ios_device")
+        logger = ForensicLogger()
+        logger.set_log_file(paths.log_file)
+        print("iOS acquisition not implemented")
+        logger.log_info("iOS acquisition not implemented. Exiting safely.")
+        sys.exit(0)
+
+    device = _init_device(args)
+    metadata = _confirm_acquisition(device, args)
+
+    drift_ms = device.calculate_clock_drift()
+    if drift_ms is not None:
+        print(f"[*] Clock Drift: {drift_ms:+.3f}ms (logged to acquisition.log)")
+
+    print("\n[2/5] Creating Evidence Structure...")
+    paths = EvidenceManager.create_structure(args.output, device.serial)
+    logger = ForensicLogger()
+    logger.set_log_file(paths.log_file)
+    timeline, add_event = _setup_logging(paths, logger)
+
+    start_time = datetime.now(timezone.utc)
+    _log_startup(add_event, args, metadata, start_time)
+
+    if args.dry_run:
+        _handle_dry_run(args, add_event)
+        return print("\nDRY RUN complete. Device is reachable.")
+
+    whatsapp_accessible = _perform_extractions(device, paths, timeline, add_event, args)
     report_integrity, total_evidence_size, total_file_count, integrity_manifest = _verify_integrity(paths, add_event)
     duration_str = _generate_reports(args, metadata, paths, report_integrity, timeline, start_time, whatsapp_accessible)
     _final_integrity_check(paths, integrity_manifest, add_event, duration_str, total_file_count, total_evidence_size)
