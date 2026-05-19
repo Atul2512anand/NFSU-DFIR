@@ -73,6 +73,53 @@ to identify whether deleted recoverable pages may exist.
 Supports acquisition against Android AVD emulators for offline DFIR testing and validation.
 
 ---
+# Screenshots
+
+## CLI Interface
+
+![CLI Interface](assets/screenshots/cli_interface.png)
+
+Demonstrates the rubric-compliant argparse acquisition workflow.
+
+---
+
+## Call Log Acquisition
+
+![Call Log Extraction](assets/screenshots/call_log_extraction.png)
+
+Shows forensic extraction and SQLite parsing of Android call records.
+
+---
+
+## SMS Database Extraction
+
+![SMS Extraction](assets/screenshots/sms_extraction.png)
+
+Demonstrates successful acquisition and parsing of SMS artefacts.
+
+---
+
+## Browser History Acquisition
+
+![Browser History](assets/screenshots/browser_history_extraction.png)
+
+Shows Chrome browser history extraction from forensic SQLite databases.
+
+---
+
+## Installed Application Enumeration
+
+![Installed Applications](assets/screenshots/installed_apps_extraction.png)
+
+Demonstrates installed package enumeration with metadata extraction.
+
+---
+
+## EXIF GPS Extraction & Deleted Record Analysis
+
+![EXIF GPS and Deleted Analysis](assets/screenshots/exif_deleted_analysis.png)
+
+Shows GPS metadata extraction and SQLite freelist deleted-record analysis.
 
 # Project Structure
 
